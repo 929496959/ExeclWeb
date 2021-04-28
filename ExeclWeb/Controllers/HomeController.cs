@@ -1,11 +1,10 @@
-﻿using ExeclWeb.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace ExeclWeb.Controllers
 {
@@ -20,7 +19,9 @@ namespace ExeclWeb.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            //return View();
+            return Redirect("/Sheet/SheetIndex");
+            //return Redirect("/Sheet/SynergySheetIndex");
         }
     }
 }

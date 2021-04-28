@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Sheet";
+}
+
+<div id="sheet" style="margin: 0px; padding: 0px; position: absolute; width: 100%; height: 100%; left: 0px; top: 0px;">
+
+</div>
+
+@section Scripts {
+    <script>
+        var hostOrigin = location.origin;
+        var gridKey = "2A4E0F2F-3FEE-E055-D2D5-C9165B00240B";
+        $(function () {
+            //配置项
+            var options = {
+                container: 'sheet', // DOM容器Id
+                title: '在线Sheet Demo', // 设置表格Id
+                lang: 'zh', // 设置表格语言
+                gridKey: gridKey, // 唯一key
+                loadUrl: hostOrigin + "/Sheet/LoadSheet", // 加载整个工作簿
+                //loadSheetUrl: hostOrigin + "/Sheet/LoadOtherSheet", // 加载其它页celldata
+                functionButton: '<button id="submitSheet" class="btn btn-primary" onclick="submitSheet();" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">保存</button>  <button id="refreshSheet" class="btn btn-primary" onclick="refreshSheet();" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">刷新</button>   <button id="deleteSheet" class="btn btn-primary btn-danger" onclick="deleteSheet();" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">删除</button>',
+                userInfo: 'Aaron', // 用户名称
+                myFolderUrl: 'https://cn.bing.com/', // 左上角<返回按钮的链接
+            }
+            // 表格初始化
+            luckysheet.create(options);
+        });
+        // 提交sheet
+        function submitSheet() {
+            // 提交之前退出编辑模式
+            luckysheet.exitEditMode();
+            var sheets = luckysheet.getAllSheets();
+            for (var i = 0; i < sheets.length; i++) {
+                sheets[i]["row"] = sheets[i].data.length;
+                sheets[i]["column"] = sheets[i].data[0].length;
+                sheets[i].data = [];
+            }
+            //console.log(sheets);
+            //return;
+            $.ajax({
+                type: "post",
+                url: hostOrigin + "/Sheet/SubmitSheet",
+                data: { "gridKey": gridKey, "data": JSON.stringify(sheets) },
+                dataType: "json",
+                success: function (res) {
+                    console.log(res);
+                }
+            });
+        }
+        // 删除sheet
+        function deleteSheet() {
+            layer.confirm('删除后不可恢复，确定删除？', {
+                btn: ['确定', '取消'] //按钮
+            }, function (index) {
+                $.ajax({
+                    type: "post",
+                    url: hostOrigin + "/Sheet/DeleteSheet",
+                    data: { "gridKey": gridKey },
+                    dataType: "json",
+                    success: function (res) {
+                        layer.close(index);
+                        if (res == 1) {
+                            refreshSheet();
+                        }
+                    }
+                });
+            });
+        }
+        // 刷新sheet
+        function refreshSheet() {
+            location.reload();
+        }
+    </script>
+}

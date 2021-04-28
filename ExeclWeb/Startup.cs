@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExeclWeb.Extension;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace ExeclWeb
 {
@@ -23,6 +25,13 @@ namespace ExeclWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<FormOptions>(options =>
+            {
+                options.ValueLengthLimit = int.MaxValue;
+                options.MultipartBodyLengthLimit = int.MaxValue;
+                options.MultipartHeadersLengthLimit = int.MaxValue;
+            });
+
             services.AddControllersWithViews();
         }
 
@@ -45,6 +54,12 @@ namespace ExeclWeb
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseWebSockets(new WebSocketOptions
+            {
+                KeepAliveInterval = TimeSpan.FromSeconds(60),
+            });
+            app.SheetWebSocket();
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "LuckySheetIndex";
+}
+
+<div id="sheet" style="margin: 0px; padding: 0px; position: absolute; width: 100%; height: 100%; left: 0px; top: 0px;">
+
+</div>
+
+@section Scripts {
+    <script>
+        var gridKey = "9BC4E24A-D545-4EEF-4680-050ED4C3BF54";
+        var userId = "E6F64ECE-8D54-2000-B4B8-7DA05A7722BE";
+        var hostOrigin = location.origin;
+
+        $(function () {
+            //配置项
+            var options = {
+                container: 'sheet',
+                title: '在线协同编辑Sheet Demo',
+                lang: 'zh',
+                gridKey: gridKey,  // 唯一key
+                allowUpdate: true, // 允许更新
+                updateUrl: "ws://" + location.host + "?gridkey=" + gridKey + "&userid=" + userId + "&q=" + random(),
+                //updateUrl: "ws://127.0.0.1:26780/websocket/sheet?gridKey=" + gridKey + "&userid=" + userId + "&q=" + random(),
+                loadUrl: hostOrigin + "/sheet/LoadSynergySheet",
+                //loadSheetUrl: hostOrigin + "/sheet/LoadOtherSynergySheet",
+                userInfo: 'aaron', // 用户名称
+                myFolderUrl: 'https://cn.bing.com/', // 左上角<返回按钮的链接
+            }
+            // 表格初始化
+            luckysheet.create(options);
+        });
+        // 随机数产生
+        function random() {
+            var x = 9999999;
+            var y = 0;
+            var rand = parseInt(Math.random() * (x - y + 1) + y);
+            return rand;
+        }
+    </script>
+}

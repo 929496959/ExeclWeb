@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace ConsoleTest
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            //JObjectTest.JObject();
+            await ProcessTest.Process();
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("end...");
+            Console.ReadKey();
         }
     }
 }
