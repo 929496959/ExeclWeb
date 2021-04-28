@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Common;
-using Data.Application;
 using Newtonsoft.Json.Linq;
+using ExeclWeb.Core.Application;
+using ExeclWeb.Core.Common;
 
 namespace ExeclWeb.Common
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Data.Entitys
+namespace ExeclWeb.Core.Entitys
 {
     public class sheet
     {

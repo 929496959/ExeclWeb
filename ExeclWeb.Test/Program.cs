@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace ConsoleTest
+namespace ExeclWeb.Test
 {
     class Program
     {

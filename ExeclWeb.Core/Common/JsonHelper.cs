@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Common
+namespace ExeclWeb.Core.Common
 {
     public static class JsonHelper
     {

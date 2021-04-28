@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Text;
 using System.Web;
-using Common;
 
-namespace OnLine.Web.Common
+namespace ExeclWeb.Core.Common
 {
     public static class Util
     {

@@ -9,12 +9,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Common\Common.csproj" />
-		<ProjectReference Include="..\Data\Data.csproj" />
+		<ProjectReference Include="..\ExeclWeb.Core\ExeclWeb.Core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Views\Shared\" />
+		<Folder Include="Views\Shared\" />
 	</ItemGroup>
 
 </Project>

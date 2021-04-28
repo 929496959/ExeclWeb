@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace Common
+namespace ExeclWeb.Core.Common
 {
     /// <summary>
     /// Config帮助类

@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using System.Transactions;
-using Data.Repository;
-using Common;
+using ExeclWeb.Core.Common;
+using ExeclWeb.Core.Repository;
 
-namespace Data.Application
+namespace ExeclWeb.Core.Application
 {
     public class SheetService
     {

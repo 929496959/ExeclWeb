@@ -10,11 +10,14 @@ using ICSharpCode.SharpZipLib.Tar;
 using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Zip.Compression;
 
-namespace Common
+namespace ExeclWeb.Core.Common
 {
-    public static class GZIPHelper
+    /// <summary>
+    /// Gzip帮助类
+    /// </summary>
+    public static class SharpZipHelper
     {
-        private const int BUFFER_LENGTH = 2048;
+        private const int BUFFER_LENGTH = 1024;
 
         #region Zip
         /// <summary>
@@ -214,6 +217,7 @@ namespace Common
             Array.Clear(cData, 0, cData.Length);
             return result;
         }
+
         /// <summary>
         /// 解压缩字符串
         /// </summary>

@@ -2,7 +2,7 @@
 using System.IO;
 using NLog;
 
-namespace Common
+namespace ExeclWeb.Core.Common
 {
     public class NLogger
     {

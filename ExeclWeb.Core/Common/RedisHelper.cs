@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using FreeRedis;
 using Newtonsoft.Json;
+using FreeRedis;
 
-namespace Common
+namespace ExeclWeb.Core.Common
 {
     public static class Redis
     {

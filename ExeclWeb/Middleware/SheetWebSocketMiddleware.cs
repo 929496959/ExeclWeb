@@ -5,12 +5,11 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Common;
-using Data.ViewModel;
-using ExeclWeb.Common;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
-using OnLine.Web.Common;
+using ExeclWeb.Core.Common;
+using ExeclWeb.Core.ViewModel;
+using ExeclWeb.Common;
 
 namespace ExeclWeb.Middleware
 {

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ExeclWebSocket.Common;
-using Data.ViewModel;
+using ExeclWeb.Core.Common;
+using ExeclWeb.Core.ViewModel;
 using Fleck;
-using Common;
 
 namespace OnLine.WebSocket
 {

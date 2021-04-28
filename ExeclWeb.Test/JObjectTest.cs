@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
-using Common;
+using ExeclWeb.Core.Common;
 
-namespace ConsoleTest
+namespace ExeclWeb.Test
 {
     public class JObjectTest
     {

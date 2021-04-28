@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using Dapper;
-using Common;
+using ExeclWeb.Core.Common;
 
-namespace Data
+namespace ExeclWeb.Core.Data
 {
     /// <summary>
     /// Dapper帮助类

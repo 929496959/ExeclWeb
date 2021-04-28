@@ -2,14 +2,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using Data.Application;
-using Common;
+using ExeclWeb.Core.Application;
+using ExeclWeb.Core.Common;
 
-namespace ConsoleTest
+namespace ExeclWeb.Test
 {
     public class ProcessTest
     {
-        private static readonly SheetService OnLineSheetService = new SheetService();
+        private static readonly SheetService SheetService = new SheetService();
 
         public static async Task Process()
         {

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dapper;
-using Data.Entitys;
+using ExeclWeb.Core.Data;
+using ExeclWeb.Core.Entitys;
 
-namespace Data.Repository
+namespace ExeclWeb.Core.Repository
 {
     public class SheetRepository
     {

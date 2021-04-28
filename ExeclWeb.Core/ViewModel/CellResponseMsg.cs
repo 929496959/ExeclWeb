@@ -1,4 +1,4 @@
-﻿namespace Data.ViewModel
+﻿namespace ExeclWeb.Core.ViewModel
 {
     /// <summary>
     /// 单元格响应Model
