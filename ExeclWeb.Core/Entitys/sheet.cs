@@ -13,7 +13,7 @@ namespace ExeclWeb.Core.Entitys
         /// </summary>
         public string sheet_id { get; set; }
         /// <summary>
-        /// sheet数据
+        /// sheet json数据
         /// </summary>
         public string json_data { get; set; }
         /// <summary>

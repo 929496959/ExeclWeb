@@ -52,7 +52,7 @@ namespace ExeclWeb.Core.Application
                     if (sheet == null)
                     {
                         // 如果数据库不存在，初始一条数据
-                        string _defaultSheet = "[{\"name\":\"Sheet1\",\"index\":\"1\",\"order\":0,\"status\":1,\"row\":54,\"column\":60,\"celldata\":[]},{\"name\":\"Sheet2\",\"index\":\"2\",\"order\":1,\"status\":0,\"row\":54,\"column\":60,\"celldata\":[]},{\"name\":\"Sheet3\",\"index\":\"3\",\"order\":2,\"status\":0,\"row\":54,\"column\":60,\"celldata\":[]}]";
+                        string _defaultSheet = "[{\"name\":\"Sheet1\",\"chart\":[],\"color\":\"\",\"index\":\"1\",\"order\":0,\"row\":84,\"column\":60,\"config\":{},\"status\":1,\"celldata\":[],\"ch_width\":4748,\"rowsplit\":[],\"rh_height\":1790,\"scrollTop\":0,\"scrollLeft\":0,\"visibledatarow\":[],\"visibledatacolumn\":[],\"jfgird_select_save\":[],\"jfgrid_selection_range\":{}},{\"name\":\"Sheet2\",\"chart\":[],\"color\":\"\",\"index\":\"2\",\"order\":0,\"row\":84,\"column\":60,\"config\":{},\"status\":0,\"celldata\":[],\"ch_width\":4748,\"rowsplit\":[],\"rh_height\":1790,\"scrollTop\":0,\"scrollLeft\":0,\"visibledatarow\":[],\"visibledatacolumn\":[],\"jfgird_select_save\":[],\"jfgrid_selection_range\":{}},{\"name\":\"Sheet3\",\"chart\":[],\"color\":\"\",\"index\":\"3\",\"order\":0,\"row\":84,\"column\":60,\"config\":{},\"status\":0,\"celldata\":[],\"ch_width\":4748,\"rowsplit\":[],\"rh_height\":1790,\"scrollTop\":0,\"scrollLeft\":0,\"visibledatarow\":[],\"visibledatacolumn\":[],\"jfgird_select_save\":[],\"jfgrid_selection_range\":{}}]";
                         var addStatus = await _sheetRepository.AddSheetAsync(gridKey, _defaultSheet);
                         if (addStatus)
                         {

@@ -72,12 +72,15 @@ namespace ExeclWeb.Test
                         break;
                     case "sha":
                         // 新建sheet
+                        data = Operation_Sha(requestMsg, sheetJsonData);
                         break;
                     case "shs":
                         // 切换到指定sheet
+                        data = Operation_Shs(requestMsg, sheetJsonData);
                         break;
                     case "shc":
                         // 复制sheet
+                        data = Operation_Shc(requestMsg, sheetJsonData);
                         break;
                     case "na":
                         // 修改工作簿名称
@@ -505,6 +508,51 @@ namespace ExeclWeb.Test
             }
 
             return jArray.ToJson();
+        }
+
+        /// <summary>
+        /// 新建sheet
+        /// </summary>
+        /// <param name="requestMsg">请求信息</param>
+        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <returns></returns>
+        public static string Operation_Sha(JObject requestMsg, string sheetJsonData)
+        {
+            var jObject = requestMsg.Value<JObject>();
+            var v = jObject.Value<JObject>("v");
+
+            var jArray = sheetJsonData.ToObject<JArray>();
+            jArray.Add(v);
+            return jArray.ToJson();
+        }
+
+        /// <summary>
+        /// 切换到指定sheet
+        /// </summary>
+        /// <param name="requestMsg">请求信息</param>
+        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <returns></returns>
+        public static string Operation_Shs(JObject requestMsg, string sheetJsonData)
+        {
+            var jObject = requestMsg.Value<JObject>();
+            var i = jObject.Value<string>("i");
+            var v = jObject.Value<JObject>("v");
+            var copyIndex = v.Value<string>("copyindex");
+            var copyName = v.Value<string>("name");
+
+            var jArray = sheetJsonData.ToObject<JArray>();
+            return null;
+        }
+
+        /// <summary>
+        /// 复制sheet
+        /// </summary>
+        /// <param name="requestMsg">请求信息</param>
+        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <returns></returns>
+        public static string Operation_Shc(JObject requestMsg, string sheetJsonData)
+        {
+            return null;
         }
     }
 }
