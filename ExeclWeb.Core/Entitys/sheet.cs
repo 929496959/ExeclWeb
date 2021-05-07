@@ -2,7 +2,7 @@
 
 namespace ExeclWeb.Core.Entitys
 {
-    public class sheet
+    public class Sheet
     {
         /// <summary>
         /// 主键

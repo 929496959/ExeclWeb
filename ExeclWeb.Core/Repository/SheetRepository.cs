@@ -19,10 +19,10 @@ namespace ExeclWeb.Core.Repository
         /// 获取全部
         /// </summary>
         /// <returns></returns>
-        public async Task<List<sheet>> GetSheetsAsync()
+        public async Task<List<Sheet>> GetSheetsAsync()
         {
             var sql = "SELECT t1.id,t1.sheet_id,t1.json_data,t1.create_time,t1.update_time FROM sheet t1;";
-            var list = await _dapperHelper.QueryFirstAsync<List<sheet>>(sql);
+            var list = await _dapperHelper.QueryFirstAsync<List<Sheet>>(sql);
             return list;
         }
 
@@ -31,10 +31,10 @@ namespace ExeclWeb.Core.Repository
         /// </summary>
         /// <param name="sheetId">工作簿id</param>
         /// <returns></returns>
-        public async Task<sheet> GetSheetAsync(string sheetId)
+        public async Task<Sheet> GetSheetAsync(string sheetId)
         {
             var sql = "SELECT t1.id,t1.sheet_id,t1.json_data,t1.create_time,t1.update_time FROM sheet t1 WHERE t1.sheet_id=@sheet_id;";
-            var entity = await _dapperHelper.QueryFirstAsync<sheet>(sql, new { sheet_id = sheetId });
+            var entity = await _dapperHelper.QueryFirstAsync<Sheet>(sql, new { sheet_id = sheetId });
             return entity;
         }
 

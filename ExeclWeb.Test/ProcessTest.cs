@@ -22,8 +22,9 @@ namespace ExeclWeb.Test
                 //var all = "{\"t\":\"all\",\"i\":\"1\",\"v\":{},\"k\":\"config\"}";
                 //var all = "{\"t\":\"all\",\"i\":\"1\",\"v\":[],\"k\":\"luckysheet_conditionformat_save\"}";
                 //var cg = "{\"t\":\"cg\",\"i\":\"1\",\"v\":[{\"rangeType\":\"range\",\"borderType\":\"border-outside\",\"color\":\"#000\",\"style\":\"1\",\"range\":[{\"row\":[0,1],\"column\":[0,0],\"row_focus\":0,\"column_focus\":0,\"left\":0,\"width\":73,\"top\":0,\"height\":19,\"left_move\":0,\"width_move\":73,\"top_move\":0,\"height_move\":39}]}],\"k\":\"borderInfo\"}";
-                var fc = "{\"t\":\"fc\",\"i\":\"1\",\"v\":\"{\\\"r\\\":1,\\\"c\\\":1,\\\"index\\\":\\\"0\\\",\\\"func\\\":[true,3,\\\"=sum(A1:B1)\\\"]}\",\"op\":\"add\",\"pos\":0}";
-                var requestMsg = fc.ToObject<JObject>();
+                //var fc = "{\"t\":\"fc\",\"i\":\"1\",\"v\":\"{\\\"r\\\":1,\\\"c\\\":1,\\\"index\\\":\\\"0\\\",\\\"func\\\":[true,3,\\\"=sum(A1:B1)\\\"]}\",\"op\":\"add\",\"pos\":0}";
+                var shr = "{\"t\":\"shr\",\"i\":null,\"v\":{\"0\":1,\"1\":0,\"2\":2,\"3\":3,\"4\":4,\"5\":5,\"6\":6,\"7\":7,\"Sheet_6az6nei65t1i_1596209937084\":8}}";
+                var requestMsg = shr.ToObject<JObject>();
 
                 // 工作博数据
                 //var sheetData = await OnLineSheetService.LoadSheetData(gridKey);
@@ -74,28 +75,32 @@ namespace ExeclWeb.Test
                         // 新建sheet
                         data = Operation_Sha(requestMsg, sheetJsonData);
                         break;
-                    case "shs":
-                        // 切换到指定sheet
-                        data = Operation_Shs(requestMsg, sheetJsonData);
-                        break;
                     case "shc":
                         // 复制sheet
                         data = Operation_Shc(requestMsg, sheetJsonData);
                         break;
-                    case "na":
-                        // 修改工作簿名称
-                        break;
                     case "shd":
                         // 删除sheet
+                        data = Operation_Shd(requestMsg, sheetJsonData);
                         break;
                     case "shre":
                         // 删除sheet后恢复操作
+                        data = Operation_Shre(requestMsg, sheetJsonData);
                         break;
                     case "shr":
                         // 调整sheet位置
+                        data = Operation_Shr(requestMsg, sheetJsonData);
+                        break;
+                    case "shs":
+                        // 切换到指定sheet
+                        data = Operation_Shs(requestMsg, sheetJsonData);
                         break;
                     case "sh":
                         // sheet属性(隐藏或显示)
+                        data = Operation_Sh(requestMsg, sheetJsonData);
+                        break;
+                    case "na":
+                        // 修改工作簿名称
                         break;
                     default:
                         break;
@@ -116,7 +121,7 @@ namespace ExeclWeb.Test
         /// <param name="requestMsg">请求信息</param>
         /// <param name="sheetJsonData">工作薄json_data</param>
         /// <returns></returns>
-        public static string Operation_V(JObject requestMsg, string sheetJsonData)
+        private static string Operation_V(JObject requestMsg, string sheetJsonData)
         {
             // 获取请求信息
             var jObject = requestMsg.Value<JObject>();
@@ -170,7 +175,7 @@ namespace ExeclWeb.Test
         /// <param name="requestMsg">请求信息</param>
         /// <param name="sheetJsonData">工作薄json_data</param>
         /// <returns></returns>
-        public static string Operation_Rv(JObject requestMsg, string sheetJsonData)
+        private static string Operation_Rv(JObject requestMsg, string sheetJsonData)
         {
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");//当前sheet的index值
@@ -209,7 +214,7 @@ namespace ExeclWeb.Test
         /// <param name="requestMsg">请求信息</param>
         /// <param name="sheetJsonData">工作薄json_data</param>
         /// <returns></returns>
-        public static string Operation_Cg(JObject requestMsg, string sheetJsonData)
+        private static string Operation_Cg(JObject requestMsg, string sheetJsonData)
         {
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");
@@ -245,7 +250,7 @@ namespace ExeclWeb.Test
         /// <param name="requestMsg">请求信息</param>
         /// <param name="sheetJsonData">工作薄json_data</param>
         /// <returns></returns>
-        public static string Operation_All(JObject requestMsg, string sheetJsonData)
+        private static string Operation_All(JObject requestMsg, string sheetJsonData)
         {
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");
@@ -273,7 +278,7 @@ namespace ExeclWeb.Test
         /// <param name="requestMsg">请求信息</param>
         /// <param name="sheetJsonData">工作薄json_data</param>
         /// <returns></returns>
-        public static string Operation_Fc(JObject requestMsg, string sheetJsonData)
+        private static string Operation_Fc(JObject requestMsg, string sheetJsonData)
         {
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");
@@ -312,7 +317,7 @@ namespace ExeclWeb.Test
         /// <param name="requestMsg">请求信息</param>
         /// <param name="sheetJsonData">工作薄json_data</param>
         /// <returns></returns>
-        public static string Operation_Drc(JObject requestMsg, string sheetJsonData)
+        private static string Operation_Drc(JObject requestMsg, string sheetJsonData)
         {
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");
@@ -375,7 +380,7 @@ namespace ExeclWeb.Test
         /// <param name="requestMsg">请求信息</param>
         /// <param name="sheetJsonData">工作薄json_data</param>
         /// <returns></returns>
-        public static string Operation_Arc(JObject requestMsg, string sheetJsonData)
+        private static string Operation_Arc(JObject requestMsg, string sheetJsonData)
         {
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");
@@ -470,7 +475,7 @@ namespace ExeclWeb.Test
         /// <param name="requestMsg">请求信息</param>
         /// <param name="sheetJsonData">工作薄json_data</param>
         /// <returns></returns>
-        public static string Operation_Fsc(JObject requestMsg, string sheetJsonData)
+        private static string Operation_Fsc(JObject requestMsg, string sheetJsonData)
         {
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");
@@ -493,7 +498,7 @@ namespace ExeclWeb.Test
         /// <param name="requestMsg">请求信息</param>
         /// <param name="sheetJsonData">工作薄json_data</param>
         /// <returns></returns>
-        public static string Operation_Fsr(JObject requestMsg, string sheetJsonData)
+        private static string Operation_Fsr(JObject requestMsg, string sheetJsonData)
         {
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");
@@ -516,7 +521,7 @@ namespace ExeclWeb.Test
         /// <param name="requestMsg">请求信息</param>
         /// <param name="sheetJsonData">工作薄json_data</param>
         /// <returns></returns>
-        public static string Operation_Sha(JObject requestMsg, string sheetJsonData)
+        private static string Operation_Sha(JObject requestMsg, string sheetJsonData)
         {
             var jObject = requestMsg.Value<JObject>();
             var v = jObject.Value<JObject>("v");
@@ -527,32 +532,111 @@ namespace ExeclWeb.Test
         }
 
         /// <summary>
-        /// 切换到指定sheet
-        /// </summary>
-        /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
-        /// <returns></returns>
-        public static string Operation_Shs(JObject requestMsg, string sheetJsonData)
-        {
-            var jObject = requestMsg.Value<JObject>();
-            var i = jObject.Value<string>("i");
-            var v = jObject.Value<JObject>("v");
-            var copyIndex = v.Value<string>("copyindex");
-            var copyName = v.Value<string>("name");
-
-            var jArray = sheetJsonData.ToObject<JArray>();
-            return null;
-        }
-
-        /// <summary>
         /// 复制sheet
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
         /// <param name="sheetJsonData">工作薄json_data</param>
         /// <returns></returns>
-        public static string Operation_Shc(JObject requestMsg, string sheetJsonData)
+        private static string Operation_Shc(JObject requestMsg, string sheetJsonData)
         {
-            return null;
+            var jObject = requestMsg.Value<JObject>();
+            var i = jObject.Value<string>("i");
+            var v = jObject.Value<JObject>("v");
+            var vCopyIndex = v.Value<int>("copyindex");
+            var vName = v.Value<string>("name");
+
+            var jArray = sheetJsonData.ToObject<JArray>();
+
+            var newSheet = jArray[vCopyIndex];
+            newSheet["index"] = i;
+            newSheet["name"] = vName;
+            jArray.Add(newSheet);
+
+            return jArray.ToJson();
+        }
+
+        /// <summary>
+        /// 删除sheet，功能暂时不实现
+        /// </summary>
+        /// <param name="requestMsg">请求信息</param>
+        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <returns></returns>
+        private static string Operation_Shd(JObject requestMsg, string sheetJsonData)
+        {
+            var jObject = requestMsg.Value<JObject>();
+            var v = jObject.Value<JObject>("v");
+            var vDeleIndex = v.Value<JObject>("deleIndex");
+
+            var jArray = sheetJsonData.ToObject<JArray>();
+
+            return jArray.ToJson();
+        }
+
+        /// <summary>
+        /// 删除sheet后恢复，功能暂时不实现
+        /// </summary>
+        /// <param name="requestMsg">请求信息</param>
+        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <returns></returns>
+        private static string Operation_Shre(JObject requestMsg, string sheetJsonData)
+        {
+            var jObject = requestMsg.Value<JObject>();
+            var v = jObject.Value<JObject>("v");
+            var vReIndex = v.Value<JObject>("reIndex");
+
+            var jArray = sheetJsonData.ToObject<JArray>();
+            return jArray.ToJson();
+        }
+
+        /// <summary>
+        /// 调整sheet位置
+        /// </summary>
+        /// <param name="requestMsg">请求信息</param>
+        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <returns></returns>
+        private static string Operation_Shr(JObject requestMsg, string sheetJsonData)
+        {
+            var jObject = requestMsg.Value<JObject>();
+            var v = jObject.Value<JObject>("v");
+
+            var jArray = sheetJsonData.ToObject<JArray>();
+            foreach (var item in v)
+            {
+                jArray[item.Key]["order"] = item.Value;
+            }
+            return jArray.ToJson();
+        }
+
+        /// <summary>
+        /// 切换到指定sheet
+        /// </summary>
+        /// <param name="requestMsg">请求信息</param>
+        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <returns></returns>
+        private static string Operation_Shs(JObject requestMsg, string sheetJsonData)
+        {
+            var jObject = requestMsg.Value<JObject>();
+            var v = jObject.Value<int>("v");
+
+            var jArray = sheetJsonData.ToObject<JArray>();
+            foreach (var item in jArray)
+            {
+                item["status"] = item["name"] == jArray[v]["name"] ? 1 : 0;
+            }
+            return jArray.ToJson();
+        }
+
+        /// <summary>
+        /// sheet属性(隐藏或显示)
+        /// </summary>
+        /// <param name="requestMsg">请求信息</param>
+        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <returns></returns>
+        private static string Operation_Sh(JObject requestMsg, string sheetJsonData)
+        {
+            var jObject = requestMsg.Value<JObject>();
+            var jArray = sheetJsonData.ToObject<JArray>();
+            return jArray.ToJson();
         }
     }
 }
