@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ExeclWeb.Core.Application;
+using ExeclWeb.Core.Common;
 
 namespace ExeclWeb.Controllers
 {
@@ -32,8 +33,12 @@ namespace ExeclWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> LoadSheet(string gridKey)
         {
-            var data = await _sheetService.LoadSheetData(gridKey);
-            return Json(data);
+            if (!await _sheetService.IsExist(gridKey))
+            {
+                await _sheetService.InitSheet(gridKey);
+            }
+            var jArray = await _sheetService.LoadSheet(gridKey);
+            return Json(jArray.ToJson());
         }
 
         /// <summary>
@@ -91,11 +96,12 @@ namespace ExeclWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> LoadSynergySheet(string gridKey)
         {
-            //var data = await _sheetService.LoadSheetData(gridKey);
-            //return Json(data);
-
-            var json = "[{\"name\":\"Sheet1\",\"index\":\"1\",\"order\":0,\"status\":1,\"config\":{},\"celldata\":[{\"v\":1,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"1\",\"r\":0,\"c\":0},{\"v\":2,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"2\",\"r\":1,\"c\":0},{\"v\":3,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"3\",\"r\":2,\"c\":0},{\"v\":4,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"4\",\"r\":3,\"c\":0},{\"v\":5,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"5\",\"r\":4,\"c\":0}]},{\"name\":\"Sheet2\",\"index\":\"2\",\"order\":1,\"status\":0,\"config\":{\"borderInfo\":null},\"celldata\":[]},{\"name\":\"Sheet3\",\"index\":\"3\",\"order\":2,\"status\":0,\"config\":{},\"celldata\":[]}]";
-            return Json(json);
+            if (!await _sheetService.IsExist(gridKey))
+            {
+                await _sheetService.InitSheet(gridKey);
+            }
+            var jArray = await _sheetService.LoadSheet(gridKey);
+            return Json(jArray.ToJson());
         }
 
         /// <summary>

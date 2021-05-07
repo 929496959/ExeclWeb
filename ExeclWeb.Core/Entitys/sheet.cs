@@ -9,9 +9,9 @@ namespace ExeclWeb.Core.Entitys
         /// </summary>
         public int id { get; set; }
         /// <summary>
-        /// sheetId
+        /// execl主键
         /// </summary>
-        public string sheet_id { get; set; }
+        public string grid_key { get; set; }
         /// <summary>
         /// sheet下标
         /// </summary>

@@ -36,15 +36,14 @@
                 sheets[i]["column"] = sheets[i].data[0].length;
                 sheets[i].data = [];
             }
-            //console.log(sheets);
-            //return;
             $.ajax({
                 type: "post",
                 url: hostOrigin + "/Sheet/SubmitSheet",
                 data: { "gridKey": gridKey, "data": JSON.stringify(sheets) },
                 dataType: "json",
                 success: function (res) {
-                    console.log(res);
+                    //console.log(res);
+                    layer.alert('提交成果...', { icon: 1 });
                 }
             });
         }

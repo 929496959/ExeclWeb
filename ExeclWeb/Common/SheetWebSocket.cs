@@ -20,7 +20,7 @@ namespace ExeclWeb.Common
             {
                 if (requestMsg == null) return false;
 
-                var sheetJsonData = await _sheetService.LoadSheetData(gridKey);
+                var sheetJsonData = await _sheetService.LoadSheet(gridKey);
 
                 string type = requestMsg.Value<string>("t");
                 switch (type)
