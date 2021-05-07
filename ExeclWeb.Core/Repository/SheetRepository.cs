@@ -20,10 +20,10 @@ namespace ExeclWeb.Core.Repository
         /// </summary>
         /// <param name="gridKey">execl主键</param>
         /// <returns></returns>
-        public async Task<IEnumerable<Sheet>> GetSheets(string gridKey)
+        public async Task<IEnumerable<Sheet1>> GetSheets(string gridKey)
         {
             var sql = "SELECT * FROM sheet WHERE grid_key=@grid_key;";
-            return await _dapperHelper.QueryAsync<Sheet>(sql, new { grid_key = gridKey });
+            return await _dapperHelper.QueryAsync<Sheet1>(sql, new { grid_key = gridKey });
         }
 
         /// <summary>
