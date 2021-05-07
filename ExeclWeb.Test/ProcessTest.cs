@@ -101,6 +101,7 @@ namespace ExeclWeb.Test
                         break;
                     case "na":
                         // 修改工作簿名称
+                        data = Operation_Na(requestMsg, sheetJsonData);
                         break;
                     default:
                         break;
@@ -635,6 +636,41 @@ namespace ExeclWeb.Test
         private static string Operation_Sh(JObject requestMsg, string sheetJsonData)
         {
             var jObject = requestMsg.Value<JObject>();
+            var i = jObject.Value<string>("i");
+            var v = jObject.Value<int>("v");
+            var op = jObject.Value<string>("op");
+            var cur = jObject.Value<string>("cur");
+
+            var jArray = sheetJsonData.ToObject<JArray>();
+            var sheet = (JObject)jArray.FirstOrDefault(p => p.Value<string>("index") == i);
+            var curSheet = jArray.FirstOrDefault(p => p.Value<string>("index") == cur);
+            if (op == "hide")
+            {
+                // 隐藏
+                sheet["hide "] = 1;
+                sheet["status"] = 0;
+                curSheet["status"] = 1;
+            }
+            else
+            {
+                // 显示
+                sheet["hide "] = 0;
+                sheet["status"] = 1;
+                curSheet["status"] = 0;
+            }
+            return jArray.ToJson();
+        }
+
+        /// <summary>
+        /// sheet属性(隐藏或显示)
+        /// </summary>
+        /// <param name="requestMsg">请求信息</param>
+        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <returns></returns>
+        private static string Operation_Na(JObject requestMsg, string sheetJsonData)
+        {
+            //var jObject = requestMsg.Value<JObject>();
+            //var v = jObject.Value<string>("v");
             var jArray = sheetJsonData.ToObject<JArray>();
             return jArray.ToJson();
         }
