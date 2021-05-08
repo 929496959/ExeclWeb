@@ -27,6 +27,18 @@ namespace ExeclWeb.Core.Repository
         }
 
         /// <summary>
+        /// 根据execl所有sheet
+        /// </summary>
+        /// <param name="gridKey">execl主键</param>
+        /// <param name="index">sheet下班</param>
+        /// <returns></returns>
+        public async Task<Sheet> GetSheet(string gridKey, string index)
+        {
+            var sql = "SELECT * FROM sheet WHERE grid_key=@grid_key AND `index`=@index;";
+            return await _dapperHelper.QueryFirstAsync<Sheet>(sql, new { grid_key = gridKey, index });
+        }
+
+        /// <summary>
         /// 添加sheet
         /// </summary>
         /// <param name="gridKey">execl主键</param>
@@ -47,8 +59,8 @@ namespace ExeclWeb.Core.Repository
             param.Add("@is_delete", isDelete);
             param.Add("@create_time", DateTime.Now);
 
-            var insertSql = "INSERT INTO sheet(`grid_key`,`index`,`json_data`,`status`,`order`,`is_delete`,`create_time`) VALUE(@grid_key,@index,@json_data,@status,@order,@is_delete,@create_time);";
-            return await _dapperHelper.ExecuteAsync(insertSql, param);
+            var sql = "INSERT INTO sheet(`grid_key`,`index`,`json_data`,`status`,`order`,`is_delete`,`create_time`) VALUE(@grid_key,@index,@json_data,@status,@order,@is_delete,@create_time);";
+            return await _dapperHelper.ExecuteAsync(sql, param);
         }
 
         /// <summary>
@@ -74,8 +86,40 @@ namespace ExeclWeb.Core.Repository
             param.Add("@is_delete", isDelete);
             param.Add("@update_time", DateTime.Now);
 
-            var updateSql = "UPDATE sheet SET `grid_key`=@grid_key,`index`=@index,`json_data`=@json_data,`status`=@status,`order`=@order,`is_delete`=@is_delete WHERE id=@id;";
-            return await _dapperHelper.ExecuteAsync(updateSql, param);
+            var sql = "UPDATE sheet SET `grid_key`=@grid_key,`index`=@index,`json_data`=@json_data,`status`=@status,`order`=@order,`is_delete`=@is_delete WHERE id=@id;";
+            return await _dapperHelper.ExecuteAsync(sql, param);
+        }
+
+        /// <summary>
+        /// 修改是否删除状态
+        /// </summary>
+        /// <param name="id">主键id</param>
+        /// <param name="isDelete">是否删除</param>
+        /// <returns></returns>
+        public async Task<bool> UpdateIsDelete(int id, int isDelete)
+        {
+            var param = new DynamicParameters();
+            param.Add("@id", id);
+            param.Add("@is_delete", isDelete);
+
+            var sql = "UPDATE sheet SET `is_delete`=@is_delete WHERE id=@id;";
+            return await _dapperHelper.ExecuteAsync(sql, param);
+        }
+
+        /// <summary>
+        /// 修改激活状态
+        /// </summary>
+        /// <param name="id">主键id</param>
+        /// <param name="status">激活状态</param>
+        /// <returns></returns>
+        public async Task<bool> UpdateStatus(int id, int status)
+        {
+            var param = new DynamicParameters();
+            param.Add("@id", id);
+            param.Add("@status", status);
+
+            var sql = "UPDATE sheet SET `status`=@status WHERE id=@id;";
+            return await _dapperHelper.ExecuteAsync(sql, param);
         }
 
         /// <summary>

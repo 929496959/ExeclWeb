@@ -17,91 +17,85 @@ namespace ExeclWeb.Test
             try
             {
                 // 客户端数据
-                //var v = "{\"t\":\"v\",\"i\":\"1\",\"v\":{\"v\":99,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"99\"},\"r\":0,\"c\":3}";
+                var v = "{\"t\":\"v\",\"i\":\"1\",\"v\":{\"v\":99,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"99\"},\"r\":0,\"c\":3}";
                 //var rv = "{\"t\":\"rv\",\"i\":\"1\",\"v\":[[{\"v\":1,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"1\"}],[{\"v\":2,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"2\"}],[{\"v\":3,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"3\"}],[{\"v\":4,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"4\"}],[{\"v\":5,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"5\"}]],\"range\":{\"row\":[0,4],\"column\":[0,0]}}";
                 //var all = "{\"t\":\"all\",\"i\":\"1\",\"v\":{},\"k\":\"config\"}";
                 //var all = "{\"t\":\"all\",\"i\":\"1\",\"v\":[],\"k\":\"luckysheet_conditionformat_save\"}";
                 //var cg = "{\"t\":\"cg\",\"i\":\"1\",\"v\":[{\"rangeType\":\"range\",\"borderType\":\"border-outside\",\"color\":\"#000\",\"style\":\"1\",\"range\":[{\"row\":[0,1],\"column\":[0,0],\"row_focus\":0,\"column_focus\":0,\"left\":0,\"width\":73,\"top\":0,\"height\":19,\"left_move\":0,\"width_move\":73,\"top_move\":0,\"height_move\":39}]}],\"k\":\"borderInfo\"}";
                 //var fc = "{\"t\":\"fc\",\"i\":\"1\",\"v\":\"{\\\"r\\\":1,\\\"c\\\":1,\\\"index\\\":\\\"0\\\",\\\"func\\\":[true,3,\\\"=sum(A1:B1)\\\"]}\",\"op\":\"add\",\"pos\":0}";
-                var shr = "{\"t\":\"shr\",\"i\":null,\"v\":{\"0\":1,\"1\":0,\"2\":2,\"3\":3,\"4\":4,\"5\":5,\"6\":6,\"7\":7,\"Sheet_6az6nei65t1i_1596209937084\":8}}";
-                var requestMsg = shr.ToObject<JObject>();
+                //var shr = "{\"t\":\"shr\",\"i\":null,\"v\":{\"0\":1,\"1\":0,\"2\":2,\"3\":3,\"4\":4,\"5\":5,\"6\":6,\"7\":7,\"Sheet_6az6nei65t1i_1596209937084\":8}}";
+                var requestMsg = v.ToObject<JObject>();
 
-                // 工作博数据
-                //var sheetData = await OnLineSheetService.LoadSheetData(gridKey);
-                //var sheetJsonData = "[{\"name\":\"Sheet1\",\"index\":\"1\",\"order\":0,\"status\":1,\"row\":54,\"column\":60,\"celldata\":[]},{\"name\":\"Sheet2\",\"index\":\"2\",\"order\":1,\"status\":0,\"row\":54,\"column\":60,\"celldata\":[]},{\"name\":\"Sheet3\",\"index\":\"3\",\"order\":2,\"status\":0,\"row\":54,\"column\":60,\"celldata\":[]}]";
-                var sheetJsonData = "[{\"name\":\"Sheet1\",\"index\":\"1\",\"order\":0,\"status\":1,\"row\":84,\"column\":60,\"config\":{},\"celldata\":[{\"v\":1,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"1\",\"r\":0,\"c\":0},{\"v\":2,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"2\",\"r\":1,\"c\":0},{\"v\":3,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"3\",\"r\":2,\"c\":0},{\"v\":4,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"4\",\"r\":3,\"c\":0},{\"v\":5,\"ct\":{\"fa\":\"General\",\"t\":\"n\"},\"m\":\"5\",\"r\":4,\"c\":0}],\"calcChain\":[\"{\\\"r\\\":1,\\\"c\\\":1,\\\"index\\\":\\\"0\\\",\\\"func\\\":[true,3,\\\"=sum(A1:B1)\\\"]}\"]},{\"name\":\"Sheet2\",\"index\":\"2\",\"order\":1,\"status\":0,\"row\":84,\"column\":60,\"config\":{},\"celldata\":[]},{\"name\":\"Sheet3\",\"index\":\"3\",\"order\":2,\"status\":0,\"row\":84,\"column\":60,\"config\":{},\"celldata\":[]}]";
-
-                string data;
                 string type = requestMsg.Value<string>("t");
                 switch (type)
                 {
                     case "v":
                         // 单个单元格刷新
-                        data = Operation_V(requestMsg, sheetJsonData);
+                        await Operation_V(requestMsg, gridKey);
                         break;
                     case "rv":
                         // 范围单元格刷新
-                        data = Operation_Rv(requestMsg, sheetJsonData);
+                        await Operation_Rv(requestMsg, gridKey);
                         break;
                     case "cg":
                         // config操作
-                        data = Operation_Cg(requestMsg, sheetJsonData);
+                        await Operation_Cg(requestMsg, gridKey);
                         break;
                     case "all":
                         // 通用保存
-                        data = Operation_All(requestMsg, sheetJsonData);
+                        await Operation_All(requestMsg, gridKey);
                         break;
                     case "fc":
                         // 函数链操作
-                        data = Operation_Fc(requestMsg, sheetJsonData);
+                        await Operation_Fc(requestMsg, gridKey);
                         break;
                     case "drc":
                         // 删除行或列
-                        data = Operation_Drc(requestMsg, sheetJsonData);
+                        await Operation_Drc(requestMsg, gridKey);
                         break;
                     case "arc":
                         // 增加行或列
-                        data = Operation_Arc(requestMsg, sheetJsonData);
+                        await Operation_Arc(requestMsg, gridKey);
                         break;
                     case "fsc":
                         // 清除筛选
-                        data = Operation_Fsc(requestMsg, sheetJsonData);
+                        await Operation_Fsc(requestMsg, gridKey);
                         break;
                     case "fsr":
                         // 恢复筛选
-                        data = Operation_Fsr(requestMsg, sheetJsonData);
+                        await Operation_Fsr(requestMsg, gridKey);
                         break;
                     case "sha":
                         // 新建sheet
-                        data = Operation_Sha(requestMsg, sheetJsonData);
+                        await Operation_Sha(requestMsg, gridKey);
                         break;
                     case "shc":
                         // 复制sheet
-                        data = Operation_Shc(requestMsg, sheetJsonData);
+                        await Operation_Shc(requestMsg, gridKey);
                         break;
                     case "shd":
                         // 删除sheet
-                        data = Operation_Shd(requestMsg, sheetJsonData);
+                        await Operation_Shd(requestMsg, gridKey);
                         break;
                     case "shre":
                         // 删除sheet后恢复操作
-                        data = Operation_Shre(requestMsg, sheetJsonData);
+                        await Operation_Shre(requestMsg, gridKey);
                         break;
                     case "shr":
                         // 调整sheet位置
-                        data = Operation_Shr(requestMsg, sheetJsonData);
+                        await Operation_Shr(requestMsg, gridKey);
                         break;
                     case "shs":
                         // 切换到指定sheet
-                        data = Operation_Shs(requestMsg, sheetJsonData);
+                        await Operation_Shs(requestMsg, gridKey);
                         break;
                     case "sh":
                         // sheet属性(隐藏或显示)
-                        data = Operation_Sh(requestMsg, sheetJsonData);
+                        await Operation_Sh(requestMsg, gridKey);
                         break;
                     case "na":
                         // 修改工作簿名称
-                        data = Operation_Na(requestMsg, sheetJsonData);
+                        Operation_Na(requestMsg, gridKey);
                         break;
                     default:
                         break;
@@ -120,20 +114,20 @@ namespace ExeclWeb.Test
         /// 单个单元格刷新
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_V(JObject requestMsg, string sheetJsonData)
+        private static async Task Operation_V(JObject requestMsg, string gridKey)
         {
-            // 获取请求信息
+            // 请求信息
             var jObject = requestMsg.Value<JObject>();
-            var i = jObject.Value<string>("i");//当前sheet的index值
-            var v = jObject.Value<JObject>("v");//单元格的值
-            var r = jObject.Value<int>("r");//单元格的行号
-            var c = jObject.Value<int>("c");//单元格的列号
+            var i = jObject.Value<string>("i");
+            var v = jObject.Value<JObject>("v");
+            var r = jObject.Value<int>("r");
+            var c = jObject.Value<int>("c");
 
-            // 获取工作薄
-            var jArray = sheetJsonData.ToObject<JArray>();
-            var sheet = (JObject)jArray.FirstOrDefault(p => p.Value<string>("index") == i);
+            // sheet页
+            var sheetModel = await SheetService.GetSheet(gridKey, i);
+            var sheet = (JObject)sheetModel.json_data;
             var cellData = sheet.Value<JArray>("celldata");
             if (cellData.Count > 0)
             {
@@ -158,7 +152,7 @@ namespace ExeclWeb.Test
             }
             else
             {
-                // 如果 celldata 是空，则添加
+                // 如果celldata 是空，则添加
                 var cell = new JObject()
                 {
                     {"r",r},
@@ -167,25 +161,29 @@ namespace ExeclWeb.Test
                 };
                 cellData.Add(cell);
             }
-            return jArray.ToJson();
+
+            // 提交修改
+            await SheetService.UpdateSheet(sheetModel.id, gridKey, sheetModel.index, sheet.ToJson(), sheetModel.status, sheetModel.order, sheetModel.is_delete);
         }
 
         /// <summary>
         /// 范围单元格刷新
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_Rv(JObject requestMsg, string sheetJsonData)
+        private static async Task Operation_Rv(JObject requestMsg, string gridKey)
         {
+            // 请求信息
             var jObject = requestMsg.Value<JObject>();
-            var i = jObject.Value<string>("i");//当前sheet的index值
-            var vArray = jObject.Value<JArray>("v");//二维数组
+            var i = jObject.Value<string>("i");
+            var vArray = jObject.Value<JArray>("v");
             var row = jObject.Value<JObject>("range").Value<JArray>("row");
             var column = jObject.Value<JObject>("range").Value<JArray>("column");
 
-            var jArray = sheetJsonData.ToObject<JArray>();
-            var sheet = (JObject)jArray.FirstOrDefault(p => p.Value<string>("index") == i);
+            // sheet页
+            var sheetModel = await SheetService.GetSheet(gridKey, i);
+            var sheet = (JObject)sheetModel.json_data;
             var cellData = sheet.Value<JArray>("celldata");
             //遍历行列，对符合行列的内容进行更新
             for (int ri = row.Value<int>(0); ri <= row.Value<int>(1); ri++)
@@ -206,24 +204,33 @@ namespace ExeclWeb.Test
                     }
                 }
             }
-            return jArray.ToJson();
+
+            // 提交修改
+            await SheetService.UpdateSheet(sheetModel.id, gridKey, sheetModel.index, sheet.ToJson(), sheetModel.status, sheetModel.order, sheetModel.is_delete);
         }
 
         /// <summary>
         /// config操作
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_Cg(JObject requestMsg, string sheetJsonData)
+        private static async Task Operation_Cg(JObject requestMsg, string gridKey)
         {
+            // 请求信息
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");
             var k = jObject.Value<string>("k");
             var v = jObject.Value<JToken>("v");
 
-            var jArray = sheetJsonData.ToObject<JArray>();
-            var sheet = (JObject)jArray.FirstOrDefault(p => p.Value<string>("index") == i);
+            // sheet页
+            var sheetModel = await SheetService.GetSheet(gridKey, i);
+            var sheet = (JObject)sheetModel.json_data;
+            //如果不存在，则创建 'config' 节点
+            if (!sheet.ContainsKey("config"))
+            {
+                sheet.Add("config", null);
+            }
             var config = sheet.Value<JObject>("config");
             bool isExist = config.ContainsKey(k);
             if (isExist)
@@ -242,24 +249,27 @@ namespace ExeclWeb.Test
                 }
             }
 
-            return jArray.ToJson();
+            // 提交修改
+            await SheetService.UpdateSheet(sheetModel.id, gridKey, sheetModel.index, sheet.ToJson(), sheetModel.status, sheetModel.order, sheetModel.is_delete);
         }
 
         /// <summary>
         /// 通用保存
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_All(JObject requestMsg, string sheetJsonData)
+        private static async Task Operation_All(JObject requestMsg, string gridKey)
         {
+            // 请求信息
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");
             var k = jObject.Value<string>("k");
             var v = jObject.Value<JToken>("v");
 
-            var jArray = sheetJsonData.ToObject<JArray>();
-            var sheet = (JObject)jArray.FirstOrDefault(p => p.Value<string>("index") == i);
+            // sheet页
+            var sheetModel = await SheetService.GetSheet(gridKey, i);
+            var sheet = (JObject)sheetModel.json_data;
             bool isExist = sheet.ContainsKey(k);
             if (isExist)
             {
@@ -270,25 +280,28 @@ namespace ExeclWeb.Test
                 sheet.Add(k, v);
             }
 
-            return jArray.ToJson();
+            // 提交修改
+            await SheetService.UpdateSheet(sheetModel.id, gridKey, sheetModel.index, sheet.ToJson(), sheetModel.status, sheetModel.order, sheetModel.is_delete);
         }
 
         /// <summary>
         /// 函数链操作
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_Fc(JObject requestMsg, string sheetJsonData)
+        private static async Task Operation_Fc(JObject requestMsg, string gridKey)
         {
+            // 请求信息
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");
             var v = jObject.Value<JToken>("v");
             var op = jObject.Value<string>("op");
             var pos = jObject.Value<int>("pos");
 
-            var jArray = sheetJsonData.ToObject<JArray>();
-            var sheet = (JObject)jArray.FirstOrDefault(p => p.Value<string>("index") == i);
+            // sheet页
+            var sheetModel = await SheetService.GetSheet(gridKey, i);
+            var sheet = (JObject)sheetModel.json_data;
 
             // 判断公式链节点是否存在
             if (sheet != null && !sheet.ContainsKey("calcChain"))
@@ -309,17 +322,19 @@ namespace ExeclWeb.Test
                 sheet.Value<JArray>("calcChain").RemoveAt(pos);
             }
 
-            return jArray.ToJson();
+            // 提交修改
+            await SheetService.UpdateSheet(sheetModel.id, gridKey, sheetModel.index, sheet.ToJson(), sheetModel.status, sheetModel.order, sheetModel.is_delete);
         }
 
         /// <summary>
         /// 删除行或列
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_Drc(JObject requestMsg, string sheetJsonData)
+        private static async Task Operation_Drc(JObject requestMsg, string gridKey)
         {
+            // 请求信息
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");
             var rc = jObject.Value<string>("r");// r 行，c 列
@@ -327,8 +342,9 @@ namespace ExeclWeb.Test
             int vIndex = v.Value<int>("index");
             int vLen = v.Value<int>("len");
 
-            var jArray = sheetJsonData.ToObject<JArray>();
-            var sheet = (JObject)jArray.FirstOrDefault(p => p.Value<string>("index") == i);
+            // sheet页
+            var sheetModel = await SheetService.GetSheet(gridKey, i);
+            var sheet = (JObject)sheetModel.json_data;
             var cellData = sheet.Value<JArray>("celldata");
             foreach (var item in cellData)
             {
@@ -372,17 +388,20 @@ namespace ExeclWeb.Test
             {
                 sheet["column"] = sheet.Value<int>("column") - vLen;
             }
-            return jArray.ToJson();
+
+            // 提交修改
+            await SheetService.UpdateSheet(sheetModel.id, gridKey, sheetModel.index, sheet.ToJson(), sheetModel.status, sheetModel.order, sheetModel.is_delete);
         }
 
         /// <summary>
         /// 增加行或列
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_Arc(JObject requestMsg, string sheetJsonData)
+        private static async Task Operation_Arc(JObject requestMsg, string gridKey)
         {
+            // 请求信息
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");
             var rc = jObject.Value<string>("r");// r 行，c 列
@@ -392,8 +411,9 @@ namespace ExeclWeb.Test
             string vDirection = v.Value<string>("direction");
             JArray vData = v.Value<JArray>("data");
 
-            var jArray = sheetJsonData.ToObject<JArray>();
-            var sheet = (JObject)jArray.FirstOrDefault(p => p.Value<string>("index") == i);
+            // sheet页
+            var sheetModel = await SheetService.GetSheet(gridKey, i);
+            var sheet = (JObject)sheetModel.json_data;
             var cellData = sheet.Value<JArray>("celldata");
             foreach (var item in cellData)
             {
@@ -467,183 +487,220 @@ namespace ExeclWeb.Test
                     }
                 }
             }
-            return jArray.ToJson();
+
+            // 提交修改
+            await SheetService.UpdateSheet(sheetModel.id, gridKey, sheetModel.index, sheet.ToJson(), sheetModel.status, sheetModel.order, sheetModel.is_delete);
         }
 
         /// <summary>
         /// 清除筛选
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_Fsc(JObject requestMsg, string sheetJsonData)
+        private static async Task Operation_Fsc(JObject requestMsg, string gridKey)
         {
+            // 请求信息
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");
             var v = jObject.Value<JObject>("v");
 
-            var jArray = sheetJsonData.ToObject<JArray>();
-            var sheet = (JObject)jArray.FirstOrDefault(p => p.Value<string>("index") == i);
+            // sheet页
+            var sheetModel = await SheetService.GetSheet(gridKey, i);
+            var sheet = (JObject)sheetModel.json_data;
             if (v == null)
             {
                 sheet.Remove("filter");
                 sheet.Remove("filter_select");
             }
 
-            return jArray.ToJson();
+            // 提交修改
+            await SheetService.UpdateSheet(sheetModel.id, gridKey, sheetModel.index, sheet.ToJson(), sheetModel.status, sheetModel.order, sheetModel.is_delete);
         }
 
         /// <summary>
         /// 恢复筛选
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_Fsr(JObject requestMsg, string sheetJsonData)
+        private static async Task Operation_Fsr(JObject requestMsg, string gridKey)
         {
+            // 请求信息
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");
             var v = jObject.Value<JObject>("v");
 
-            var jArray = sheetJsonData.ToObject<JArray>();
-            var sheet = (JObject)jArray.FirstOrDefault(p => p.Value<string>("index") == i);
+            // sheet页
+            var sheetModel = await SheetService.GetSheet(gridKey, i);
+            var sheet = (JObject)sheetModel.json_data;
             if (v != null)
             {
                 sheet["filter"] = v["filter"];
                 sheet["filter_select"] = v["filter_select"];
             }
 
-            return jArray.ToJson();
+            // 提交修改
+            await SheetService.UpdateSheet(sheetModel.id, gridKey, sheetModel.index, sheet.ToJson(), sheetModel.status, sheetModel.order, sheetModel.is_delete);
         }
 
         /// <summary>
         /// 新建sheet
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_Sha(JObject requestMsg, string sheetJsonData)
+        private static async Task Operation_Sha(JObject requestMsg, string gridKey)
         {
+            // 请求信息
             var jObject = requestMsg.Value<JObject>();
             var v = jObject.Value<JObject>("v");
 
-            var jArray = sheetJsonData.ToObject<JArray>();
-            jArray.Add(v);
-            return jArray.ToJson();
+            string index = v.Value<string>("index");
+            int status = v.Value<int>("status");
+            int order = v.Value<int>("order");
+
+            // 提交修改
+            await SheetService.AddSheet(gridKey, index, v.ToJson(), status, order, 0);
         }
 
         /// <summary>
         /// 复制sheet
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_Shc(JObject requestMsg, string sheetJsonData)
+        private static async Task Operation_Shc(JObject requestMsg, string gridKey)
         {
+            // 请求信息
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");
             var v = jObject.Value<JObject>("v");
             var vCopyIndex = v.Value<int>("copyindex");
             var vName = v.Value<string>("name");
 
-            var jArray = sheetJsonData.ToObject<JArray>();
+            // sheet页
+            var sheetList = await SheetService.GetSheets(gridKey);
+            var sheetModel = sheetList.ToList()[vCopyIndex];
+            var sheet = (JObject)sheetModel.json_data;
+            sheet["index"] = i;
+            sheet["name"] = vName;
 
-            var newSheet = jArray[vCopyIndex];
-            newSheet["index"] = i;
-            newSheet["name"] = vName;
-            jArray.Add(newSheet);
-
-            return jArray.ToJson();
+            // 提交修改
+            await SheetService.AddSheet(gridKey, i, sheet.ToJson(), sheetModel.status, sheetModel.order, sheetModel.is_delete);
         }
 
         /// <summary>
-        /// 删除sheet，功能暂时不实现
+        /// 删除sheet
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_Shd(JObject requestMsg, string sheetJsonData)
+        private static async Task Operation_Shd(JObject requestMsg, string gridKey)
         {
+            // 请求信息
             var jObject = requestMsg.Value<JObject>();
             var v = jObject.Value<JObject>("v");
-            var vDeleIndex = v.Value<JObject>("deleIndex");
+            var vDeleIndex = v.Value<int>("deleIndex");
 
-            var jArray = sheetJsonData.ToObject<JArray>();
+            // sheet页
+            var sheetList = await SheetService.GetSheets(gridKey);
+            var sheetModel = sheetList.ToList()[vDeleIndex];
 
-            return jArray.ToJson();
+            // 提交修改
+            await SheetService.UpdateIsDelete(sheetModel.id, 1);
         }
 
         /// <summary>
-        /// 删除sheet后恢复，功能暂时不实现
+        /// 删除sheet后恢复
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_Shre(JObject requestMsg, string sheetJsonData)
+        private static async Task Operation_Shre(JObject requestMsg, string gridKey)
         {
+            // 请求信息
             var jObject = requestMsg.Value<JObject>();
             var v = jObject.Value<JObject>("v");
-            var vReIndex = v.Value<JObject>("reIndex");
+            var vReIndex = v.Value<int>("reIndex");
 
-            var jArray = sheetJsonData.ToObject<JArray>();
-            return jArray.ToJson();
+            // sheet页
+            var sheetList = await SheetService.GetSheets(gridKey);
+            var sheetModel = sheetList.ToList()[vReIndex];
+
+            // 提交修改
+            await SheetService.UpdateIsDelete(sheetModel.id, 0);
         }
 
         /// <summary>
         /// 调整sheet位置
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_Shr(JObject requestMsg, string sheetJsonData)
+        private static async Task Operation_Shr(JObject requestMsg, string gridKey)
         {
+            // 请求信息
             var jObject = requestMsg.Value<JObject>();
             var v = jObject.Value<JObject>("v");
 
-            var jArray = sheetJsonData.ToObject<JArray>();
+            // sheet页
+            var sheetList = await SheetService.GetSheets(gridKey);
             foreach (var item in v)
             {
-                jArray[item.Key]["order"] = item.Value;
+                var sheetModel = sheetList.FirstOrDefault(p => p.index == item.Key);
+                if (sheetModel != null)
+                {
+                    var sheet = (JObject)sheetModel.json_data;
+                    sheet["order"] = item.Value;
+                    await SheetService.UpdateSheet(sheetModel.id, gridKey, sheetModel.index, sheet.ToJson(), sheetModel.status, Convert.ToInt32(item.Value), sheetModel.is_delete);
+                }
             }
-            return jArray.ToJson();
         }
 
         /// <summary>
         /// 切换到指定sheet
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_Shs(JObject requestMsg, string sheetJsonData)
+        private static async Task Operation_Shs(JObject requestMsg, string gridKey)
         {
+            // 请求信息
             var jObject = requestMsg.Value<JObject>();
             var v = jObject.Value<int>("v");
 
-            var jArray = sheetJsonData.ToObject<JArray>();
-            foreach (var item in jArray)
+            // sheet页
+            var sheetList = await SheetService.GetSheets(gridKey);
+            foreach (var item in sheetList)
             {
-                item["status"] = item["name"] == jArray[v]["name"] ? 1 : 0;
+                var vSheet = sheetList.ToList()[v];
+                if (vSheet == null) break;
+                await SheetService.UpdateStatus(vSheet.id, item.index == vSheet.index ? 1 : 0);
             }
-            return jArray.ToJson();
         }
 
         /// <summary>
         /// sheet属性(隐藏或显示)
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_Sh(JObject requestMsg, string sheetJsonData)
+        private static async Task Operation_Sh(JObject requestMsg, string gridKey)
         {
+            // 请求信息
             var jObject = requestMsg.Value<JObject>();
             var i = jObject.Value<string>("i");
             var v = jObject.Value<int>("v");
             var op = jObject.Value<string>("op");
             var cur = jObject.Value<string>("cur");
 
-            var jArray = sheetJsonData.ToObject<JArray>();
-            var sheet = (JObject)jArray.FirstOrDefault(p => p.Value<string>("index") == i);
-            var curSheet = jArray.FirstOrDefault(p => p.Value<string>("index") == cur);
+            // sheet页
+            var sheetModel = await SheetService.GetSheet(gridKey, i);
+            var sheet = (JObject)sheetModel.json_data;
+
+            var curSheetModel = await SheetService.GetSheet(gridKey, cur);
+            var curSheet = (JObject)curSheetModel.json_data;
             if (op == "hide")
             {
                 // 隐藏
@@ -658,21 +715,20 @@ namespace ExeclWeb.Test
                 sheet["status"] = 1;
                 curSheet["status"] = 0;
             }
-            return jArray.ToJson();
+            // 提交修改
+            await SheetService.UpdateSheet(sheetModel.id, gridKey, sheetModel.index, sheet.ToJson(), sheetModel.status, sheetModel.order, sheetModel.is_delete);
+            await SheetService.UpdateSheet(curSheetModel.id, gridKey, curSheetModel.index, curSheet.ToJson(), curSheetModel.status, curSheetModel.order, curSheetModel.is_delete);
         }
 
         /// <summary>
         /// sheet属性(隐藏或显示)
         /// </summary>
         /// <param name="requestMsg">请求信息</param>
-        /// <param name="sheetJsonData">工作薄json_data</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        private static string Operation_Na(JObject requestMsg, string sheetJsonData)
+        private static void Operation_Na(JObject requestMsg, string gridKey)
         {
-            //var jObject = requestMsg.Value<JObject>();
-            //var v = jObject.Value<string>("v");
-            var jArray = sheetJsonData.ToObject<JArray>();
-            return jArray.ToJson();
+
         }
     }
 }

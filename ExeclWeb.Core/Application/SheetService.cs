@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using ExeclWeb.Core.Common;
 using ExeclWeb.Core.Repository;
+using ExeclWeb.Core.Entitys;
+using ExeclWeb.Core.Common;
 
 namespace ExeclWeb.Core.Application
 {
@@ -15,9 +17,9 @@ namespace ExeclWeb.Core.Application
         }
 
         /// <summary>
-        /// 判断是否存在execl文件
+        /// 判断execl文档是否存在
         /// </summary>
-        /// <param name="gridKey">execl主键</param>
+        /// <param name="gridKey">execl文档主键</param>
         /// <returns></returns>
         public async Task<bool> IsExist(string gridKey)
         {
@@ -25,7 +27,7 @@ namespace ExeclWeb.Core.Application
         }
 
         /// <summary>
-        /// 初始化execl sheet数据
+        /// 初始化execl文档sheet数据
         /// </summary>
         /// <param name="gridKey">execl主键</param>
         public async Task InitSheet(string gridKey)
@@ -43,7 +45,28 @@ namespace ExeclWeb.Core.Application
         }
 
         /// <summary>
-        /// 获取Sheet工作簿
+        /// 获取execl文档所有的sheet页
+        /// </summary>
+        /// <param name="gridKey">execl文档key</param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Sheet>> GetSheets(string gridKey)
+        {
+            return await _sheetRepository.GetSheets(gridKey);
+        }
+
+        /// <summary>
+        /// 根据sheet下标获取sheet
+        /// </summary>
+        /// <param name="gridKey">execl主键</param>
+        /// <param name="index">sheet下班</param>
+        /// <returns></returns>
+        public async Task<Sheet> GetSheet(string gridKey, string index)
+        {
+            return await _sheetRepository.GetSheet(gridKey, index);
+        }
+
+        /// <summary>
+        /// 加载execl文档sheet页
         /// </summary>
         /// <param name="gridKey">工作簿key</param>
         /// <returns></returns>
@@ -79,6 +102,59 @@ namespace ExeclWeb.Core.Application
                     await _sheetRepository.Add(gridKey, index, itemJson, status, order, 0);
                 }
             }
+        }
+
+        /// <summary>
+        /// 添加sheet
+        /// </summary>
+        /// <param name="gridKey">execl主键</param>
+        /// <param name="index">sheet下标</param>
+        /// <param name="jsonData">sheet json数据</param>
+        /// <param name="status">sheet状态</param>
+        /// <param name="order">sheet序号</param>
+        /// <param name="isDelete">是否删除</param>
+        /// <returns></returns>
+        public async Task<bool> AddSheet(string gridKey, string index, string jsonData, int status, int order, int isDelete)
+        {
+            return await _sheetRepository.Add(gridKey, index, jsonData, status, order, isDelete);
+        }
+
+        /// <summary>
+        /// 修改sheet页数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <param name="gridKey">execl主键</param>
+        /// <param name="index">sheet下标</param>
+        /// <param name="jsonData">sheet json数据</param>
+        /// <param name="status">sheet状态</param>
+        /// <param name="order">sheet序号</param>
+        /// <param name="isDelete">是否删除</param>
+        /// <returns></returns>
+        public async Task<bool> UpdateSheet(int id, string gridKey, string index, string jsonData, int status, int order, int isDelete)
+        {
+            return await _sheetRepository.Update(id, gridKey, index, jsonData, status, order, isDelete);
+        }
+
+        /// <summary>
+        /// 修改sheet页的是否删除状态
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="isDelete"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateIsDelete(int id, int isDelete)
+        {
+            return await _sheetRepository.UpdateIsDelete(id, isDelete);
+        }
+
+        /// <summary>
+        /// 修改sheet页的是否删除状态
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="status">激活状态</param>
+        /// <returns></returns>
+        public async Task<bool> UpdateStatus(int id, int status)
+        {
+            return await _sheetRepository.UpdateStatus(id, status);
         }
 
         /// <summary>
