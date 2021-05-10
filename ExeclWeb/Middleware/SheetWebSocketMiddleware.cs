@@ -73,7 +73,7 @@ namespace ExeclWeb.Middleware
                     continue;
                 }
                 NLogger.Info(jObject.ToJson());
-                //await SheetWebSocket.Process(jObject, gridKey);
+                await SheetWebSocket.Process(jObject, gridKey);
 
                 if (string.IsNullOrEmpty(receive))
                 {

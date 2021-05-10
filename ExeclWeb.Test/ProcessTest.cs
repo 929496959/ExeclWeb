@@ -97,8 +97,6 @@ namespace ExeclWeb.Test
                         // 修改工作簿名称
                         Operation_Na(requestMsg, gridKey);
                         break;
-                    default:
-                        break;
                 }
             }
             catch (Exception e)

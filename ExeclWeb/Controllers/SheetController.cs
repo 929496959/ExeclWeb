@@ -28,7 +28,7 @@ namespace ExeclWeb.Controllers
         /// <summary>
         /// 加载execl
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> LoadSheet(string gridKey)
@@ -44,7 +44,7 @@ namespace ExeclWeb.Controllers
         /// <summary>
         /// 加载其它sheet页
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <param name="index">sheet下标</param>
         /// <returns></returns>
         [HttpPost]
@@ -57,7 +57,7 @@ namespace ExeclWeb.Controllers
         /// <summary>
         /// 提交execl文档
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <param name="data">execl数据</param>
         /// <returns></returns>
         [HttpPost]
@@ -70,7 +70,7 @@ namespace ExeclWeb.Controllers
         /// <summary>
         /// 删除execl
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> DeleteSheet(string gridKey)
@@ -91,7 +91,7 @@ namespace ExeclWeb.Controllers
         /// <summary>
         /// 加载execl文档
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> LoadSynergySheet(string gridKey)
@@ -107,7 +107,7 @@ namespace ExeclWeb.Controllers
         /// <summary>
         /// 加载其它sheet页
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <param name="index">sheet下标</param>
         /// <returns></returns>
         [HttpPost]

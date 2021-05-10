@@ -19,7 +19,7 @@ namespace ExeclWeb.Core.Application
         /// <summary>
         /// 判断execl文档是否存在
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
         public async Task<bool> IsExist(string gridKey)
         {
@@ -29,7 +29,7 @@ namespace ExeclWeb.Core.Application
         /// <summary>
         /// 初始化execl文档sheet数据
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         public async Task InitSheet(string gridKey)
         {
             string defaultSheet = "[{\"name\":\"Sheet1\",\"chart\":[],\"color\":\"\",\"index\":\"1\",\"order\":0,\"row\":84,\"column\":60,\"config\":{},\"status\":1,\"celldata\":[],\"ch_width\":4748,\"rowsplit\":[],\"rh_height\":1790,\"scrollTop\":0,\"scrollLeft\":0,\"visibledatarow\":[],\"visibledatacolumn\":[],\"jfgird_select_save\":[],\"jfgrid_selection_range\":{}},{\"name\":\"Sheet2\",\"chart\":[],\"color\":\"\",\"index\":\"2\",\"order\":1,\"row\":84,\"column\":60,\"config\":{},\"status\":0,\"celldata\":[],\"ch_width\":4748,\"rowsplit\":[],\"rh_height\":1790,\"scrollTop\":0,\"scrollLeft\":0,\"visibledatarow\":[],\"visibledatacolumn\":[],\"jfgird_select_save\":[],\"jfgrid_selection_range\":{}},{\"name\":\"Sheet3\",\"chart\":[],\"color\":\"\",\"index\":\"3\",\"order\":2,\"row\":84,\"column\":60,\"config\":{},\"status\":0,\"celldata\":[],\"ch_width\":4748,\"rowsplit\":[],\"rh_height\":1790,\"scrollTop\":0,\"scrollLeft\":0,\"visibledatarow\":[],\"visibledatacolumn\":[],\"jfgird_select_save\":[],\"jfgrid_selection_range\":{}}]";
@@ -47,7 +47,7 @@ namespace ExeclWeb.Core.Application
         /// <summary>
         /// 获取execl文档所有的sheet页
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
         public async Task<IEnumerable<Sheet>> GetSheets(string gridKey)
         {
@@ -57,7 +57,7 @@ namespace ExeclWeb.Core.Application
         /// <summary>
         /// 根据sheet下标获取sheet
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <param name="index">sheet下标</param>
         /// <returns></returns>
         public async Task<Sheet> GetSheet(string gridKey, string index)
@@ -68,7 +68,7 @@ namespace ExeclWeb.Core.Application
         /// <summary>
         /// 加载execl文档sheet页
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
         public async Task<JArray> LoadSheet(string gridKey)
         {
@@ -99,7 +99,7 @@ namespace ExeclWeb.Core.Application
         /// <summary>
         /// 加载其它sheet页
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <param name="index">sheet下标</param>
         /// <returns></returns>
         public async Task<JObject> LoadOtherSheet(string gridKey, string index)
@@ -116,7 +116,7 @@ namespace ExeclWeb.Core.Application
         /// <summary>
         /// 提交execl文档
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <param name="jsonData">execl数据</param>
         /// <returns></returns>
         public async Task SubmitSheet(string gridKey, string jsonData)
@@ -138,7 +138,7 @@ namespace ExeclWeb.Core.Application
         /// <summary>
         /// 添加sheet
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <param name="index">sheet下标</param>
         /// <param name="jsonData">sheet json数据</param>
         /// <param name="status">sheet状态</param>
@@ -154,7 +154,7 @@ namespace ExeclWeb.Core.Application
         /// 修改sheet页数据
         /// </summary>
         /// <param name="id">主键</param>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <param name="index">sheet下标</param>
         /// <param name="jsonData">sheet json数据</param>
         /// <param name="status">sheet状态</param>
@@ -191,7 +191,7 @@ namespace ExeclWeb.Core.Application
         /// <summary>
         /// 删除execl
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
         public async Task<bool> DeleteSheet(string gridKey)
         {

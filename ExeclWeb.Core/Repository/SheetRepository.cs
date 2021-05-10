@@ -29,7 +29,7 @@ namespace ExeclWeb.Core.Repository
         /// <summary>
         /// 获取sheet页
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <param name="index">sheet下标</param>
         /// <returns></returns>
         public async Task<Sheet> GetSheet(string gridKey, string index)
@@ -41,7 +41,7 @@ namespace ExeclWeb.Core.Repository
         /// <summary>
         /// 添加sheet
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <param name="index">sheet下标</param>
         /// <param name="jsonData">sheet json数据</param>
         /// <param name="status">sheet状态</param>
@@ -67,7 +67,7 @@ namespace ExeclWeb.Core.Repository
         /// 添加sheet
         /// </summary>
         /// <param name="id">主键</param>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <param name="index">sheet下标</param>
         /// <param name="jsonData">sheet json数据</param>
         /// <param name="status">sheet状态</param>
@@ -125,7 +125,7 @@ namespace ExeclWeb.Core.Repository
         /// <summary>
         /// 判断execl是否存在
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
         public async Task<bool> IsExist(string gridKey)
         {
@@ -136,7 +136,7 @@ namespace ExeclWeb.Core.Repository
         /// <summary>
         /// 删除execl
         /// </summary>
-        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
         public async Task<bool> Delete(string gridKey)
         {
