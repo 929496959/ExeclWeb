@@ -18,14 +18,13 @@
                 container: 'sheet',
                 title: '在线协同Execl',
                 lang: 'zh',
-                gridKey: gridKey,  // 唯一key
-                allowUpdate: true, // 允许更新
-                updateUrl: "ws://" + location.host + "?gridkey=" + gridKey + "&userid=" + userId + "&q=" + random(),
-                //updateUrl: "ws://127.0.0.1:26780/websocket/sheet?gridKey=" + gridKey + "&userid=" + userId + "&q=" + random(),
+                gridKey: gridKey,
+                allowUpdate: true,
+                updateUrl: "ws://127.0.0.1:26780/sheet/ws?userid=" + userId + "&q=" + random(),
                 loadUrl: hostOrigin + "/sheet/LoadSynergySheet",
                 loadSheetUrl: hostOrigin + "/sheet/LoadOtherSynergySheet",
-                userInfo: 'aaron', // 用户名称
-                myFolderUrl: 'https://cn.bing.com/', // 左上角<返回按钮的链接
+                userInfo: 'aaron',
+                myFolderUrl: 'https://cn.bing.com/'
             }
             // 表格初始化
             luckysheet.create(options);

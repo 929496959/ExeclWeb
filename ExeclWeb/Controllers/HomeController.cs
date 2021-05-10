@@ -19,9 +19,7 @@ namespace ExeclWeb.Controllers
 
         public IActionResult Index()
         {
-            //return View();
-            return Redirect("/Sheet/SheetIndex");
-            //return Redirect("/Sheet/SynergySheetIndex");
+            return View();
         }
     }
 }

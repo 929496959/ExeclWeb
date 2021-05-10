@@ -11,11 +11,11 @@ namespace ExeclWeb.Core.Common
                 NullValueHandling = NullValueHandling.Ignore,
                 Formatting = Formatting.None
             };
-            return obj == null ? null : JsonConvert.SerializeObject(obj, jsonSetting);
+            return obj == null ? default : JsonConvert.SerializeObject(obj, jsonSetting);
         }
         public static T ToObject<T>(this string json)
         {
-            return json == null ? default(T) : JsonConvert.DeserializeObject<T>(json);
+            return json == null ? default : JsonConvert.DeserializeObject<T>(json);
         }
     }
 }

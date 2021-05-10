@@ -13,15 +13,15 @@
         $(function () {
             //配置项
             var options = {
-                container: 'sheet', // DOM容器Id
-                title: '在线Execl', // 设置表格Id
-                lang: 'zh', // 设置表格语言
-                gridKey: gridKey, // 唯一key
-                loadUrl: hostOrigin + "/Sheet/LoadSheet", // 加载整个工作簿
-                loadSheetUrl: hostOrigin + "/Sheet/LoadOtherSheet", // 加载其它页celldata
+                container: 'sheet',
+                title: '在线Execl',
+                lang: 'zh',
+                gridKey: gridKey,
+                loadUrl: hostOrigin + "/Sheet/LoadSheet",
+                loadSheetUrl: hostOrigin + "/Sheet/LoadOtherSheet",
                 functionButton: '<button id="submitSheet" class="btn btn-primary" onclick="submitSheet();" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">保存</button>  <button id="refreshSheet" class="btn btn-primary" onclick="refreshSheet();" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">刷新</button>   <button id="deleteSheet" class="btn btn-primary btn-danger" onclick="deleteSheet();" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">删除</button>',
-                userInfo: 'Aaron', // 用户名称
-                myFolderUrl: 'https://cn.bing.com/', // 左上角<返回按钮的链接
+                userInfo: 'Aaron',
+                myFolderUrl: 'https://cn.bing.com/'
             }
             // 表格初始化
             luckysheet.create(options);

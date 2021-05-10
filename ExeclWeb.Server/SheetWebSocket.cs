@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 using ExeclWeb.Core.Application;
 using ExeclWeb.Core.Common;
 
-namespace ExeclWeb.Common
+namespace ExeclWeb.Server
 {
     public class SheetWebSocket
     {

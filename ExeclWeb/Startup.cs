@@ -1,15 +1,14 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ExeclWeb.Extension;
+using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace ExeclWeb
 {
@@ -55,17 +54,11 @@ namespace ExeclWeb
 
             app.UseAuthorization();
 
-            app.UseWebSockets(new WebSocketOptions
-            {
-                KeepAliveInterval = TimeSpan.FromSeconds(60),
-            });
-            app.SheetWebSocket();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Sheet}/{action=SynergySheetIndex}/{id?}");
             });
         }
     }
