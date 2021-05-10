@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Text;
 using System.Web;
+using ExeclWeb.Core.Common;
 
-namespace ExeclWeb.Core.Common
+namespace ExeclWeb.Server
 {
-    public static class Util
+    public class Common
     {
         /// <summary>
         /// 客户端Gzip压缩数据解压

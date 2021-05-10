@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using ExeclWeb.Core.Common;
+using System.Collections.Generic;
 using ExeclWeb.Core.ViewModel;
+using ExeclWeb.Core.Common;
 using Fleck;
 
-namespace OnLine.WebSocket
+namespace ExeclWeb.Server
 {
     class Program
     {
@@ -31,10 +30,10 @@ namespace OnLine.WebSocket
                     };
                     socket.OnMessage = message =>
                     {
-                        var msg = Util.GzipEncoding(message);
+                        var msg = Common.GzipEncoding(message);
                         var rep = new CellResponseMsg()
                         {
-                            createTime = Util.TimeStamp(),
+                            createTime = Common.TimeStamp(),
                             data = msg,
                             id = "7a",
                             returnMessage = "success",

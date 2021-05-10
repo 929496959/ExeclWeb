@@ -16,14 +16,14 @@
             //配置项
             var options = {
                 container: 'sheet',
-                title: '在线协同Execl',
+                title: '协同Execl',
                 lang: 'zh',
                 gridKey: gridKey,
                 allowUpdate: true,
                 updateUrl: "ws://127.0.0.1:26780/sheet/ws?userid=" + userId + "&q=" + random(),
                 loadUrl: hostOrigin + "/Sheet/LoadSynergySheet",
                 loadSheetUrl: hostOrigin + "/Sheet/LoadOtherSynergySheet",
-                userInfo: 'aaron',
+                userInfo: 'Aaron',
                 myFolderUrl: 'https://cn.bing.com/'
             }
             // 表格初始化
@@ -31,7 +31,7 @@
         });
         // 随机数产生
         function random() {
-            var x = 9999999;
+            var x = 999999;
             var y = 0;
             var rand = parseInt(Math.random() * (x - y + 1) + y);
             return rand;
