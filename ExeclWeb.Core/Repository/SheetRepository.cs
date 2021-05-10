@@ -16,7 +16,7 @@ namespace ExeclWeb.Core.Repository
         }
 
         /// <summary>
-        /// 根据execl所有sheet
+        /// 获取execl所有sheet页
         /// </summary>
         /// <param name="gridKey">execl主键</param>
         /// <returns></returns>
@@ -27,10 +27,10 @@ namespace ExeclWeb.Core.Repository
         }
 
         /// <summary>
-        /// 根据execl所有sheet
+        /// 获取sheet页
         /// </summary>
-        /// <param name="gridKey">execl主键</param>
-        /// <param name="index">sheet下班</param>
+        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="index">sheet下标</param>
         /// <returns></returns>
         public async Task<Sheet> GetSheet(string gridKey, string index)
         {
@@ -41,7 +41,7 @@ namespace ExeclWeb.Core.Repository
         /// <summary>
         /// 添加sheet
         /// </summary>
-        /// <param name="gridKey">execl主键</param>
+        /// <param name="gridKey">execl文档主键</param>
         /// <param name="index">sheet下标</param>
         /// <param name="jsonData">sheet json数据</param>
         /// <param name="status">sheet状态</param>
@@ -67,7 +67,7 @@ namespace ExeclWeb.Core.Repository
         /// 添加sheet
         /// </summary>
         /// <param name="id">主键</param>
-        /// <param name="gridKey">execl主键</param>
+        /// <param name="gridKey">execl文档主键</param>
         /// <param name="index">sheet下标</param>
         /// <param name="jsonData">sheet json数据</param>
         /// <param name="status">sheet状态</param>
@@ -91,7 +91,7 @@ namespace ExeclWeb.Core.Repository
         }
 
         /// <summary>
-        /// 修改是否删除状态
+        /// 修改sheet删除状态
         /// </summary>
         /// <param name="id">主键id</param>
         /// <param name="isDelete">是否删除</param>
@@ -107,7 +107,7 @@ namespace ExeclWeb.Core.Repository
         }
 
         /// <summary>
-        /// 修改激活状态
+        /// 修改sheet激活状态
         /// </summary>
         /// <param name="id">主键id</param>
         /// <param name="status">激活状态</param>
@@ -123,9 +123,9 @@ namespace ExeclWeb.Core.Repository
         }
 
         /// <summary>
-        /// 判断是否存在
+        /// 判断execl是否存在
         /// </summary>
-        /// <param name="gridKey">execl主键</param>
+        /// <param name="gridKey">execl文档主键</param>
         /// <returns></returns>
         public async Task<bool> IsExist(string gridKey)
         {
@@ -134,9 +134,9 @@ namespace ExeclWeb.Core.Repository
         }
 
         /// <summary>
-        /// 删除
+        /// 删除execl
         /// </summary>
-        /// <param name="gridKey">execl主键</param>
+        /// <param name="gridKey">execl文档主键</param>
         /// <returns></returns>
         public async Task<bool> Delete(string gridKey)
         {

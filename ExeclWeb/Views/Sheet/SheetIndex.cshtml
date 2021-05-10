@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Sheet";
+    ViewData["Title"] = "办公";
 }
 
 <div id="sheet" style="margin: 0px; padding: 0px; position: absolute; width: 100%; height: 100%; left: 0px; top: 0px;">
@@ -14,11 +14,11 @@
             //配置项
             var options = {
                 container: 'sheet', // DOM容器Id
-                title: '在线Sheet Demo', // 设置表格Id
+                title: '在线Execl', // 设置表格Id
                 lang: 'zh', // 设置表格语言
                 gridKey: gridKey, // 唯一key
                 loadUrl: hostOrigin + "/Sheet/LoadSheet", // 加载整个工作簿
-                //loadSheetUrl: hostOrigin + "/Sheet/LoadOtherSheet", // 加载其它页celldata
+                loadSheetUrl: hostOrigin + "/Sheet/LoadOtherSheet", // 加载其它页celldata
                 functionButton: '<button id="submitSheet" class="btn btn-primary" onclick="submitSheet();" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">保存</button>  <button id="refreshSheet" class="btn btn-primary" onclick="refreshSheet();" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">刷新</button>   <button id="deleteSheet" class="btn btn-primary btn-danger" onclick="deleteSheet();" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">删除</button>',
                 userInfo: 'Aaron', // 用户名称
                 myFolderUrl: 'https://cn.bing.com/', // 左上角<返回按钮的链接
@@ -43,7 +43,7 @@
                 dataType: "json",
                 success: function (res) {
                     //console.log(res);
-                    layer.alert('提交成果...', { icon: 1 });
+                    layer.alert('提交成功...', { icon: 1 });
                 }
             });
         }

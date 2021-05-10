@@ -26,9 +26,9 @@ namespace ExeclWeb.Controllers
         }
 
         /// <summary>
-        /// 加载工作簿
+        /// 加载execl
         /// </summary>
-        /// <param name="gridKey">工作key</param>
+        /// <param name="gridKey">execl文档主键</param>
         /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> LoadSheet(string gridKey)
@@ -42,23 +42,23 @@ namespace ExeclWeb.Controllers
         }
 
         /// <summary>
-        /// 加载其它页 celldata
+        /// 加载其它sheet页
         /// </summary>
-        /// <param name="gridKey">唯一key</param>
-        /// <param name="index">sheet主键合集，格式为["sheet_01","sheet_02","sheet_03"]</param>
+        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="index">sheet下标</param>
         /// <returns></returns>
-        [Obsolete]
         [HttpPost]
-        public IActionResult LoadOtherSheet(string gridKey, string index)
+        public async Task<IActionResult> LoadOtherSheet(string gridKey, string index)
         {
-            return Json("{}");
+            var jObject = await _sheetService.LoadOtherSheet(gridKey, index);
+            return Json(jObject.ToJson());
         }
 
         /// <summary>
-        /// 提交sheet
+        /// 提交execl文档
         /// </summary>
-        /// <param name="gridKey">工作薄key</param>
-        /// <param name="data">工作薄数据</param>
+        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="data">execl数据</param>
         /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> SubmitSheet(string gridKey, string data)
@@ -68,9 +68,9 @@ namespace ExeclWeb.Controllers
         }
 
         /// <summary>
-        /// 删除工作薄
+        /// 删除execl
         /// </summary>
-        /// <param name="gridKey"></param>
+        /// <param name="gridKey">execl文档主键</param>
         /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> DeleteSheet(string gridKey)
@@ -89,9 +89,9 @@ namespace ExeclWeb.Controllers
         }
 
         /// <summary>
-        /// 加载工作簿
+        /// 加载execl文档
         /// </summary>
-        /// <param name="gridKey">唯一key</param>
+        /// <param name="gridKey">execl文档主键</param>
         /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> LoadSynergySheet(string gridKey)
@@ -105,16 +105,16 @@ namespace ExeclWeb.Controllers
         }
 
         /// <summary>
-        /// 加载其它页 celldata
+        /// 加载其它sheet页
         /// </summary>
-        /// <param name="gridKey"></param>
-        /// <param name="index"></param>
+        /// <param name="gridKey">execl文档主键</param>
+        /// <param name="index">sheet下标</param>
         /// <returns></returns>
-        [Obsolete]
         [HttpPost]
-        public IActionResult LoadOtherSynergySheet(string gridKey, string index)
+        public async Task<IActionResult> LoadOtherSynergySheet(string gridKey, string index)
         {
-            return Json("{}");
+            var jObject = await _sheetService.LoadOtherSheet(gridKey, index);
+            return Json(jObject.ToJson());
         }
     }
 }
