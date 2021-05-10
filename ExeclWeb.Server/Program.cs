@@ -13,7 +13,7 @@ namespace ExeclWeb.Server
         {
             try
             {
-                FleckLog.Level = LogLevel.Debug;
+                //FleckLog.Level = LogLevel.Debug;
                 var allSockets = new List<IWebSocketConnection>();
                 var server = new WebSocketServer("ws://0.0.0.0:26780");
                 server.Start(socket =>
@@ -57,6 +57,7 @@ namespace ExeclWeb.Server
             }
             catch (Exception e)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(e);
             }
 
