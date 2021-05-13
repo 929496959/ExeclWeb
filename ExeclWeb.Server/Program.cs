@@ -82,7 +82,7 @@ namespace ExeclWeb.Server
                         NLogger.Info(requestData);
                         // 单元格操作
                         SheetProcess.Process(requestData, gridKey).Wait();
-                        //Console.WriteLine(requestData);
+                        Console.WriteLine(requestData);
                         var group = SessionGroup.FirstOrDefault(p => p.Group == gridKey);
                         if (group != null)
                         {
@@ -92,10 +92,10 @@ namespace ExeclWeb.Server
                                 {
                                     createTime = Common.TimeStamp(),
                                     data = requestData,
-                                    id = "7a",
+                                    id = sessionId,
                                     returnMessage = "success",
                                     status = 0,
-                                    type = 1,
+                                    type = 2,
                                     username = "aaron"
                                 };
                                 item.WebSocketConnection.Send(rep.ToJson());

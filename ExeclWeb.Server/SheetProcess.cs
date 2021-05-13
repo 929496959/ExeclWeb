@@ -124,20 +124,20 @@ namespace ExeclWeb.Server
             var sheetModel = await SheetService.GetSheet(gridKey, i);
             var sheet = sheetModel.json_data.ToObject<JObject>();
             var cellData = sheet.Value<JArray>("celldata");
+            var cell = new JObject()
+            {
+                {"r",r},
+                {"c",c},
+                {"v",v}
+            };
             if (cellData.Count > 0)
             {
                 // 有单元格处理
                 var item = cellData.FirstOrDefault(p => p.Value<int>("r") == r && p.Value<int>("c") == c);
-                var itemJob = item.ToObject<JObject>();
+                var itemJob = item?.ToObject<JObject>();
                 if (itemJob != null)
                 {
                     var index = cellData.IndexOf(itemJob);
-                    var cell = new JObject()
-                    {
-                        {"r",r},
-                        {"c",c},
-                        {"v",v}
-                    };
                     cellData[index] = cell;
                     // 如果该单元格的 v 是null，删除该单元格
                     if (itemJob.Value<JObject>("v") == null)
@@ -145,16 +145,14 @@ namespace ExeclWeb.Server
                         cellData.Remove(index);
                     }
                 }
+                else
+                {
+                    cellData.Add(cell);
+                }
             }
             else
             {
                 // 如果celldata 是空，则添加
-                var cell = new JObject()
-                {
-                    {"r",r},
-                    {"c",c},
-                    {"v",v}
-                };
                 cellData.Add(cell);
             }
 
