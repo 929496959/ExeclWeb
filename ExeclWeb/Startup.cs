@@ -58,7 +58,7 @@ namespace ExeclWeb
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Sheet}/{action=SynergySheetIndex}/{id?}");
+                    pattern: "{controller=Sheet}/{action=SheetIndex}/{id?}");
             });
         }
     }
