@@ -14,6 +14,7 @@ namespace ExeclWeb.Server
         /// <returns></returns>
         public static string GzipEncoding(string text)
         {
+            if (string.IsNullOrWhiteSpace(text)) return null;
             try
             {
                 var isoBytes = Encoding.GetEncoding("ISO-8859-1").GetBytes(text);
