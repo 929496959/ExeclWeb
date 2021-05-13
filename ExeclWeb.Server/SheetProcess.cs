@@ -17,15 +17,16 @@ namespace ExeclWeb.Server
         /// <summary>
         /// execl表格操作
         /// </summary>
-        /// <param name="requestMsg">请求信息</param>
+        /// <param name="requestMsgData">请求信息</param>
         /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        public async Task Process(JObject requestMsg, string gridKey)
+        public async Task Process(string requestMsgData, string gridKey)
         {
+            if (requestMsgData == null) return;
+            NLogger.Info(requestMsgData);
             try
             {
-                NLogger.Info(requestMsg.ToJson());
-                if (requestMsg == null) return;
+                var requestMsg = requestMsgData.ToObject<JObject>();
                 string type = requestMsg.Value<string>("t");
                 switch (type)
                 {

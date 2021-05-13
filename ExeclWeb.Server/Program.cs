@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ExeclWeb.Core.ViewModel;
 using ExeclWeb.Core.Common;
 using Fleck;
+using Newtonsoft.Json.Linq;
 
 namespace ExeclWeb.Server
 {
     class Program
     {
         private static readonly List<SessionGroup> SessionGroup = new List<SessionGroup>();
+        private static readonly SheetProcess SheetProcess = new SheetProcess();
+
         static void Main(string[] args)
         {
             try
@@ -76,7 +80,9 @@ namespace ExeclWeb.Server
                     };
                     socket.OnMessage = message =>
                     {
-                        //var msg = Common.GzipEncoding(message);
+                        var requestData = Common.GzipEncoding(message);
+                        // 单元格操作
+                        SheetProcess.Process(requestData, gridKey).Wait();
                         if (group != null)
                         {
                             foreach (var item in group.Pools)
@@ -84,7 +90,7 @@ namespace ExeclWeb.Server
                                 var rep = new CellResponseMsg()
                                 {
                                     createTime = Common.TimeStamp(),
-                                    data = message,
+                                    data = requestData,
                                     id = "7a",
                                     returnMessage = "success",
                                     status = 0,
