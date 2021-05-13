@@ -121,15 +121,22 @@ namespace ExeclWeb.Core.Application
         /// <returns></returns>
         public async Task SubmitSheet(string gridKey, string jsonData)
         {
-            if (await _sheetRepository.Delete(gridKey))
+            var sheets = await _sheetRepository.GetSheets(gridKey);
+            var jArray = jsonData.ToObject<JArray>();
+            foreach (var item in jArray)
             {
-                var jArray = jsonData.ToObject<JArray>();
-                foreach (var item in jArray)
+                string index = item.Value<string>("index");
+                string itemJson = item.ToJson();
+                int status = item.Value<int>("status");
+                int order = item.Value<int>("order");
+
+                var sheet = sheets.FirstOrDefault(p => p.index == index);
+                if (sheet != null)
                 {
-                    string index = item.Value<string>("index");
-                    string itemJson = item.ToJson();
-                    int status = item.Value<int>("status");
-                    int order = item.Value<int>("order");
+                    await _sheetRepository.Update(sheet.id, sheet.grid_key, sheet.index, itemJson, status, order, 0);
+                }
+                else
+                {
                     await _sheetRepository.Add(gridKey, index, itemJson, status, order, 0);
                 }
             }

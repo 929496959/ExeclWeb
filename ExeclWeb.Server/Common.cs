@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Text;
 using System.Web;
+using System.Text;
 using ExeclWeb.Core.Common;
 
 namespace ExeclWeb.Server
@@ -34,15 +34,15 @@ namespace ExeclWeb.Server
         /// <param name="query">请求Path</param>
         /// <param name="key">参数key</param>
         /// <returns></returns>
-        public static string GetQueryParam(string query, string key)
+        public static string GetParam(string query, string key)
         {
             if (string.IsNullOrWhiteSpace(query)) return null;
 
             query = query.Split("/execlws?")[1];
             var array = query.Split("&");
-            for (int i = 0; i < array.Length; i++)
+            foreach (var t in array)
             {
-                var item = array[i].Split("=");
+                var item = t.Split("=");
                 if (item[0].Trim().ToLower() == key.Trim().ToLower())
                 {
                     return item[1];
@@ -59,6 +59,5 @@ namespace ExeclWeb.Server
         {
             return new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds().ToString();
         }
-
     }
 }
