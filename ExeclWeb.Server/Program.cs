@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using ExeclWeb.Core.ViewModel;
 using ExeclWeb.Core.Common;
 using Fleck;
+using Newtonsoft.Json.Linq;
 
 namespace ExeclWeb.Server
 {
@@ -24,7 +25,7 @@ namespace ExeclWeb.Server
                     var sessionId = socket.ConnectionInfo.Id.ToString();
                     var path = socket.ConnectionInfo.Path;
                     var gridKey = Common.GetParam(path, "g");
-                    //var userid = Common.GetParam(path, "userid");
+                    var userid = Common.GetParam(path, "q");
 
                     socket.OnOpen = () =>
                     {
@@ -81,7 +82,8 @@ namespace ExeclWeb.Server
                         var requestData = Common.GzipEncoding(message);
                         NLogger.Info(requestData);
                         // 单元格操作
-                        SheetProcess.Process(requestData, gridKey).Wait();
+                        //var requestJObject = requestData.ToObject<JObject>();
+                        //SheetProcess.Process(requestJObject, gridKey).Wait();
                         Console.WriteLine(requestData);
                         var group = SessionGroup.FirstOrDefault(p => p.Group == gridKey);
                         if (group != null)
@@ -96,7 +98,7 @@ namespace ExeclWeb.Server
                                     returnMessage = "success",
                                     status = 0,
                                     type = 2,
-                                    username = "aaron"
+                                    username = sessionId
                                 };
                                 item.WebSocketConnection.Send(rep.ToJson());
                             }

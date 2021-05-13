@@ -20,12 +20,11 @@ namespace ExeclWeb.Server
         /// <param name="requestMsgData">请求信息</param>
         /// <param name="gridKey">execl文档key</param>
         /// <returns></returns>
-        public async Task Process(string requestMsgData, string gridKey)
+        public async Task Process(JObject requestMsg, string gridKey)
         {
-            if (requestMsgData == null) return;
+            if (requestMsg == null) return;
             try
             {
-                var requestMsg = requestMsgData.ToObject<JObject>();
                 string type = requestMsg.Value<string>("t");
                 switch (type)
                 {
