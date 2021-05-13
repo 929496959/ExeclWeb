@@ -21,10 +21,4 @@
 		<PackageReference Include="MySql.Data" Version="8.0.23" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <None Update="Common\NLog.config">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>
-
 </Project>

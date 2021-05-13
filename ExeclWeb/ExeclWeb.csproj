@@ -20,4 +20,10 @@
 		<Folder Include="Views\Shared\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Content Update="NLog.config">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
 </Project>
