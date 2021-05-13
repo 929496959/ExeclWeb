@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using ExeclWeb.Core.ViewModel;
 using ExeclWeb.Core.Common;
 using Fleck;
-using Newtonsoft.Json.Linq;
 
 namespace ExeclWeb.Server
 {
