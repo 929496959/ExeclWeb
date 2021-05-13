@@ -25,7 +25,7 @@ namespace ExeclWeb.Server
                     var sessionId = socket.ConnectionInfo.Id.ToString();
                     var path = socket.ConnectionInfo.Path;
                     var gridKey = Common.GetParam(path, "g");
-                    var userid = Common.GetParam(path, "q");
+                    var userId = Common.GetParam(path, "q");
 
                     socket.OnOpen = () =>
                     {
@@ -82,8 +82,8 @@ namespace ExeclWeb.Server
                         var requestData = Common.GzipEncoding(message);
                         NLogger.Info(requestData);
                         // 单元格操作
-                        //var requestJObject = requestData.ToObject<JObject>();
-                        //SheetProcess.Process(requestJObject, gridKey).Wait();
+                        var requestJObject = requestData.ToObject<JObject>();
+                        SheetProcess.Process(requestJObject, gridKey).Wait();
                         Console.WriteLine(requestData);
                         var group = SessionGroup.FirstOrDefault(p => p.Group == gridKey);
                         if (group != null)
@@ -97,7 +97,7 @@ namespace ExeclWeb.Server
                                     id = sessionId,
                                     returnMessage = "success",
                                     status = 0,
-                                    type = 2,
+                                    type = requestJObject.Value<string>("t") == "mv" ? 3 : 2,
                                     username = sessionId
                                 };
                                 item.WebSocketConnection.Send(rep.ToJson());
