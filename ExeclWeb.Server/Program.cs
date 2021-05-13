@@ -23,13 +23,12 @@ namespace ExeclWeb.Server
                     // 会话Id
                     var sessionId = socket.ConnectionInfo.Id.ToString();
                     var path = socket.ConnectionInfo.Path;
-                    var gridKey = Common.GetParam(path, "t");
+                    var gridKey = Common.GetParam(path, "g");
                     //var userid = Common.GetParam(path, "userid");
 
-                    // 会话组信息
-                    var group = SessionGroup.FirstOrDefault(p => p.Group == gridKey);
                     socket.OnOpen = () =>
                     {
+                        var group = SessionGroup.FirstOrDefault(p => p.Group == gridKey);
                         if (group != null)
                         {
                             // 添加会话
@@ -64,6 +63,7 @@ namespace ExeclWeb.Server
                     };
                     socket.OnClose = () =>
                     {
+                        var group = SessionGroup.FirstOrDefault(p => p.Group == gridKey);
                         if (group != null)
                         {
                             var pool = group.Pools.FirstOrDefault(p => p.SessionId == sessionId);
@@ -79,8 +79,11 @@ namespace ExeclWeb.Server
                     socket.OnMessage = message =>
                     {
                         var requestData = Common.GzipEncoding(message);
+                        NLogger.Info(requestData);
                         // 单元格操作
                         SheetProcess.Process(requestData, gridKey).Wait();
+                        //Console.WriteLine(requestData);
+                        var group = SessionGroup.FirstOrDefault(p => p.Group == gridKey);
                         if (group != null)
                         {
                             foreach (var item in group.Pools)
@@ -92,7 +95,7 @@ namespace ExeclWeb.Server
                                     id = "7a",
                                     returnMessage = "success",
                                     status = 0,
-                                    type = 0,
+                                    type = 1,
                                     username = "aaron"
                                 };
                                 item.WebSocketConnection.Send(rep.ToJson());

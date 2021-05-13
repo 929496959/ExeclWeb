@@ -23,7 +23,6 @@ namespace ExeclWeb.Server
         public async Task Process(string requestMsgData, string gridKey)
         {
             if (requestMsgData == null) return;
-            NLogger.Info(requestMsgData);
             try
             {
                 var requestMsg = requestMsgData.ToObject<JObject>();
@@ -123,24 +122,25 @@ namespace ExeclWeb.Server
 
             // sheet页
             var sheetModel = await SheetService.GetSheet(gridKey, i);
-            var sheet = (JObject)sheetModel.json_data;
+            var sheet = sheetModel.json_data.ToObject<JObject>();
             var cellData = sheet.Value<JArray>("celldata");
             if (cellData.Count > 0)
             {
                 // 有单元格处理
-                var item = (JObject)cellData.FirstOrDefault(p => p.Value<int>("r") == r && p.Value<int>("c") == c);
-                if (item != null)
+                var item = cellData.FirstOrDefault(p => p.Value<int>("r") == r && p.Value<int>("c") == c);
+                var itemJob = item.ToObject<JObject>();
+                if (itemJob != null)
                 {
-                    var index = cellData.IndexOf(item);
+                    var index = cellData.IndexOf(itemJob);
                     var cell = new JObject()
                     {
                         {"r",r},
-                        {"v",v},
+                        {"c",c},
                         {"v",v}
                     };
                     cellData[index] = cell;
                     // 如果该单元格的 v 是null，删除该单元格
-                    if (item.Value<JObject>("v") == null)
+                    if (itemJob.Value<JObject>("v") == null)
                     {
                         cellData.Remove(index);
                     }
@@ -152,7 +152,7 @@ namespace ExeclWeb.Server
                 var cell = new JObject()
                 {
                     {"r",r},
-                    {"v",v},
+                    {"c",c},
                     {"v",v}
                 };
                 cellData.Add(cell);
@@ -179,7 +179,7 @@ namespace ExeclWeb.Server
 
             // sheet页
             var sheetModel = await SheetService.GetSheet(gridKey, i);
-            var sheet = (JObject)sheetModel.json_data;
+            var sheet = sheetModel.json_data.ToObject<JObject>();
             var cellData = sheet.Value<JArray>("celldata");
             //遍历行列，对符合行列的内容进行更新
             for (int ri = row.Value<int>(0); ri <= row.Value<int>(1); ri++)
@@ -221,7 +221,7 @@ namespace ExeclWeb.Server
 
             // sheet页
             var sheetModel = await SheetService.GetSheet(gridKey, i);
-            var sheet = (JObject)sheetModel.json_data;
+            var sheet = sheetModel.json_data.ToObject<JObject>();
             //如果不存在，则创建 'config' 节点
             if (!sheet.ContainsKey("config"))
             {
@@ -265,7 +265,7 @@ namespace ExeclWeb.Server
 
             // sheet页
             var sheetModel = await SheetService.GetSheet(gridKey, i);
-            var sheet = (JObject)sheetModel.json_data;
+            var sheet = sheetModel.json_data.ToObject<JObject>();
             bool isExist = sheet.ContainsKey(k);
             if (isExist)
             {
@@ -297,7 +297,7 @@ namespace ExeclWeb.Server
 
             // sheet页
             var sheetModel = await SheetService.GetSheet(gridKey, i);
-            var sheet = (JObject)sheetModel.json_data;
+            var sheet = sheetModel.json_data.ToObject<JObject>();
 
             // 判断公式链节点是否存在
             if (sheet != null && !sheet.ContainsKey("calcChain"))
@@ -340,11 +340,11 @@ namespace ExeclWeb.Server
 
             // sheet页
             var sheetModel = await SheetService.GetSheet(gridKey, i);
-            var sheet = (JObject)sheetModel.json_data;
+            var sheet = sheetModel.json_data.ToObject<JObject>();
             var cellData = sheet.Value<JArray>("celldata");
             foreach (var item in cellData)
             {
-                var cell = (JObject)item;
+                var cell = item.ToObject<JObject>();
                 if (rc == "r")
                 {
                     //删除行所在区域的内容
@@ -409,11 +409,11 @@ namespace ExeclWeb.Server
 
             // sheet页
             var sheetModel = await SheetService.GetSheet(gridKey, i);
-            var sheet = (JObject)sheetModel.json_data;
+            var sheet = sheetModel.json_data.ToObject<JObject>();
             var cellData = sheet.Value<JArray>("celldata");
             foreach (var item in cellData)
             {
-                var cell = (JObject)item;
+                var cell = item.ToObject<JObject>();
                 if (rc == "r")
                 {
                     //如果是增加行，且是向左增加
@@ -503,7 +503,7 @@ namespace ExeclWeb.Server
 
             // sheet页
             var sheetModel = await SheetService.GetSheet(gridKey, i);
-            var sheet = (JObject)sheetModel.json_data;
+            var sheet = sheetModel.json_data.ToObject<JObject>();
             if (v == null)
             {
                 sheet.Remove("filter");
@@ -529,7 +529,7 @@ namespace ExeclWeb.Server
 
             // sheet页
             var sheetModel = await SheetService.GetSheet(gridKey, i);
-            var sheet = (JObject)sheetModel.json_data;
+            var sheet = sheetModel.json_data.ToObject<JObject>();
             if (v != null)
             {
                 sheet["filter"] = v["filter"];
@@ -578,7 +578,7 @@ namespace ExeclWeb.Server
             // sheet页
             var sheetList = await SheetService.GetSheets(gridKey);
             var sheetModel = sheetList.ToList()[vCopyIndex];
-            var sheet = (JObject)sheetModel.json_data;
+            var sheet = sheetModel.json_data.ToObject<JObject>();
             sheet["index"] = i;
             sheet["name"] = vName;
 
@@ -647,7 +647,7 @@ namespace ExeclWeb.Server
                 var sheetModel = sheetList.FirstOrDefault(p => p.index == item.Key);
                 if (sheetModel != null)
                 {
-                    var sheet = (JObject)sheetModel.json_data;
+                    var sheet = sheetModel.json_data.ToObject<JObject>();
                     sheet["order"] = item.Value;
                     await SheetService.UpdateSheet(sheetModel.id, gridKey, sheetModel.index, sheet.ToJson(), sheetModel.status, Convert.ToInt32(item.Value), sheetModel.is_delete);
                 }
@@ -693,10 +693,10 @@ namespace ExeclWeb.Server
 
             // sheet页
             var sheetModel = await SheetService.GetSheet(gridKey, i);
-            var sheet = (JObject)sheetModel.json_data;
+            var sheet = sheetModel.json_data.ToObject<JObject>();
 
             var curSheetModel = await SheetService.GetSheet(gridKey, cur);
-            var curSheet = (JObject)curSheetModel.json_data;
+            var curSheet = curSheetModel.json_data.ToObject<JObject>();
             if (op == "hide")
             {
                 // 隐藏
