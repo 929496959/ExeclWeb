@@ -7,7 +7,10 @@ using ExeclWeb.Core.Common;
 
 namespace ExeclWeb.Server
 {
-    public class SheetWebSocket
+    /// <summary>
+    /// 表格操作
+    /// </summary>
+    public class SheetProcess
     {
         private static readonly SheetService SheetService = new SheetService();
 

@@ -29,6 +29,29 @@ namespace ExeclWeb.Server
         }
 
         /// <summary>
+        /// 获取参数
+        /// </summary>
+        /// <param name="query">请求Path</param>
+        /// <param name="key">参数key</param>
+        /// <returns></returns>
+        public static string GetQueryParam(string query, string key)
+        {
+            if (string.IsNullOrWhiteSpace(query)) return null;
+
+            query = query.Split("/execlws?")[1];
+            var array = query.Split("&");
+            for (int i = 0; i < array.Length; i++)
+            {
+                var item = array[i].Split("=");
+                if (item[0].Trim().ToLower() == key.Trim().ToLower())
+                {
+                    return item[1];
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
         /// 获取时间戳
         /// </summary>
         /// <returns></returns>
@@ -36,5 +59,6 @@ namespace ExeclWeb.Server
         {
             return new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds().ToString();
         }
+
     }
 }
