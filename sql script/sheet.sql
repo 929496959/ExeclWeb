@@ -11,7 +11,7 @@
  Target Server Version : 50714
  File Encoding         : 65001
 
- Date: 07/05/2021 16:29:26
+ Date: 13/05/2021 15:55:23
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,9 @@ CREATE TABLE `sheet`  (
   `is_delete` int(2) NOT NULL,
   `create_time` datetime(0) NOT NULL,
   `update_time` datetime(0) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `index_grid_key`(`grid_key`) USING BTREE,
+  INDEX `index_index`(`index`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
