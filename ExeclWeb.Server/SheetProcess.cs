@@ -184,11 +184,11 @@ namespace ExeclWeb.Server
             {
                 for (int ci = column.Value<int>(0); ci <= column.Value<int>(1); ci++)
                 {
-                    var v = (JObject)vArray[ri][ci];
-                    v.Add("r", ri);
-                    v.Add("c", ci);
+                    var v = vArray[ri][ci]?.ToObject<JObject>();
+                    v?.Add("r", ri);
+                    v?.Add("c", ci);
                     var cell = cellData.FirstOrDefault(p => p.Value<int>("r") == ri && p.Value<int>("c") == ci);
-                    if (cell == null)
+                    if (null == cell)
                     {
                         cellData.Add(v);
                     }
@@ -305,7 +305,7 @@ namespace ExeclWeb.Server
             // op处理
             if (op == "add")
             {
-                sheet.Value<JArray>("calcChain").Add(v);
+                sheet?.Value<JArray>("calcChain").Add(v);
             }
             if (op == "update")
             {
@@ -313,7 +313,7 @@ namespace ExeclWeb.Server
             }
             if (op == "del")
             {
-                sheet.Value<JArray>("calcChain").RemoveAt(pos);
+                sheet?.Value<JArray>("calcChain").RemoveAt(pos);
             }
 
             // 提交修改
