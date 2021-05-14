@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <!-- luckysheet -->
-    <link href="/lib/luckysheet-2.1.13/plugins/css/pluginsCss.css" rel="stylesheet" />
-    <link href="/lib/luckysheet-2.1.13/plugins/plugins.css" rel="stylesheet" />
-    <link href="/lib/luckysheet-2.1.13/css/luckysheet.css" rel="stylesheet" />
-    <link href="/lib/luckysheet-2.1.13/assets/iconfont/iconfont.css" rel="stylesheet" />
+    <link href="/lib/luckysheet-2.1.13/plugins/css/pluginsCss.css?v=1.0" rel="stylesheet" />
+    <link href="/lib/luckysheet-2.1.13/plugins/plugins.css?v=1.0" rel="stylesheet" />
+    <link href="/lib/luckysheet-2.1.13/css/luckysheet.css?v=1.0" rel="stylesheet" />
+    <link href="/lib/luckysheet-2.1.13/assets/iconfont/iconfont.css?v=1.0" rel="stylesheet" />
     @await RenderSectionAsync("Css", required: false)
 </head>
 <body>
@@ -16,10 +16,12 @@
         @RenderBody()
     </div>
     <script src="/lib/jquery-3.6.0/jquery.min.js?v=1.0"></script>
-    <script src="/lib/layer-3.3.0/layer.js"></script>
+    <script src="/lib/layer-3.3.0/layer.js?v=1.0"></script>
     <!-- luckysheet -->
-    <script src="/lib/luckysheet-2.1.13/plugins/js/plugin.js"></script>
-    <script src="/lib/luckysheet-2.1.13/luckysheet.umd.js"></script>
+    <script src="/lib/luckysheet-2.1.13/plugins/js/plugin.js?v=1.0"></script>
+    <script src="/lib/luckysheet-2.1.13/luckysheet.umd.js?v=1.0"></script>
+    <!-- luckyexecl -->
+    <script src="/lib/luckyexcel-1.0.1/luckyexcel.umd.js?v=1.0"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -48,7 +48,12 @@ namespace ExeclWeb
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                //设置不限制content-type
+                ServeUnknownFileTypes = true
+            });
 
             app.UseRouting();
 

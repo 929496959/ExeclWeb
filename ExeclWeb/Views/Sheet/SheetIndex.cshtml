@@ -2,7 +2,24 @@
     ViewData["Title"] = "在线表格";
 }
 
-<div id="sheet" style="margin: 0px; padding: 0px; position: absolute; width: 100%; height: 100%; left: 0px; top: 0px;">
+<div id="lucky-mask-demo" style="position: absolute;z-index: 1000000;left: 0px;top: 0px;bottom: 0px;right: 0px; background: rgba(255, 255, 255, 0.8); text-align: center;font-size: 40px;align-items:center;justify-content: center;display: none;">Downloading</div>
+<p style="text-align: center;">
+    <input style="font-size: 16px;" type="file" id="Luckyexcel-demo-file" name="Luckyexcel-demo-file" change="demoHandler" />
+    Or Load remote xlsx file: <select style="height: 27px; top: -2px; position: relative;" id="Luckyexcel-select-demo">
+        <option value="">select a demo</option>
+        <option value="https://minio.cnbabylon.com/public/luckysheet/money-manager-2.xlsx">Money Manager.xlsx</option>
+        <option value="https://minio.cnbabylon.com/public/luckysheet/Activity%20costs%20tracker.xlsx">Activity costs tracker.xlsx</option>
+        <option value="https://minio.cnbabylon.com/public/luckysheet/House%20cleaning%20checklist.xlsx">House cleaning checklist.xlsx</option>
+        <option value="https://minio.cnbabylon.com/public/luckysheet/Student%20assignment%20planner.xlsx">Student assignment planner.xlsx</option>
+        <option value="https://minio.cnbabylon.com/public/luckysheet/Credit%20card%20tracker.xlsx">Credit card tracker.xlsx</option>
+        <option value="https://minio.cnbabylon.com/public/luckysheet/Blue%20timesheet.xlsx">Blue timesheet.xlsx</option>
+        <option value="https://minio.cnbabylon.com/public/luckysheet/Student%20calendar%20%28Mon%29.xlsx">Student calendar (Mon).xlsx</option>
+        <option value="https://minio.cnbabylon.com/public/luckysheet/Blue%20mileage%20and%20expense%20report.xlsx">Blue mileage and expense report.xlsx</option>
+    </select>
+    <a href="javascript:void(0)" id="Luckyexcel-downlod-file">Download source xlsx file</a>
+</p>
+
+<div id="luckysheet" style="margin: 0px; padding: 0px; position: absolute; width: 100%; left: 0px; top: 80px;bottom: 0px;outline: none;">
 
 </div>
 
@@ -13,19 +30,20 @@
         $(function () {
             //配置项
             var options = {
-                container: 'sheet',
+                container: 'luckysheet',
                 title: '在线表格',
                 lang: 'zh',
                 gridKey: gridKey,
                 loadUrl: hostOrigin + "/Sheet/LoadSheet",
                 loadSheetUrl: hostOrigin + "/Sheet/LoadOtherSheet",
-                functionButton: '<button id="submitSheet" class="btn btn-primary" onclick="submitSheet();" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">保存</button>  <button id="refreshSheet" class="btn btn-primary" onclick="refreshSheet();" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">刷新</button>   <button id="deleteSheet" class="btn btn-primary btn-danger" onclick="deleteSheet();" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">删除</button>',
+                functionButton: '<button id="submitSheet" class="btn btn-primary" onclick="submitSheet();" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">保存</button>  <button id="downExcel" class="btn btn-primary" onclick="downExcel();" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">下载</button>  <button id="refreshSheet" class="btn btn-primary" onclick="refreshSheet();" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">刷新</button>   <button id="deleteSheet" class="btn btn-primary btn-danger" onclick="deleteSheet();" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">删除</button>',
                 userInfo: 'Aaron',
                 myFolderUrl: 'https://cn.bing.com/'
             }
             // 表格初始化
             luckysheet.create(options);
         });
+
         // 提交sheet
         function submitSheet() {
             // 提交之前退出编辑模式
@@ -47,28 +65,151 @@
                 }
             });
         }
+
         // 删除sheet
         function deleteSheet() {
-            layer.confirm('删除后不可恢复，确定删除？', {
-                btn: ['确定', '取消'] //按钮
-            }, function (index) {
-                $.ajax({
-                    type: "post",
-                    url: hostOrigin + "/Sheet/DeleteSheet",
-                    data: { "gridKey": gridKey },
-                    dataType: "json",
-                    success: function (res) {
-                        layer.close(index);
-                        if (res == 1) {
-                            refreshSheet();
+            layer.confirm('删除后不可恢复，确定删除？',
+                {
+                    btn: ['确定', '取消'] //按钮
+                },
+                function (index) {
+                    $.ajax({
+                        type: "post",
+                        url: hostOrigin + "/Sheet/DeleteSheet",
+                        data: { "gridKey": gridKey },
+                        dataType: "json",
+                        success: function (res) {
+                            layer.close(index);
+                            if (res == 1) {
+                                refreshSheet();
+                            }
                         }
-                    }
+                    });
                 });
-            });
         }
+
         // 刷新sheet
         function refreshSheet() {
             location.reload();
         }
+
+        // 表格下载
+        function downExcel() {
+            luckysheet.exitEditMode();
+            var sheets = luckysheet.getAllSheets();
+            for (var i = 0; i < sheets.length; i++) {
+                sheets[i].data = [];
+            }
+            $.ajax({
+                type: "post",
+                url: hostOrigin + "/Sheet/DownExcel",
+                data: { "data": JSON.stringify(sheets) },
+                dataType: "json",
+                success: function (res) {
+                    location.href = hostOrigin + "/files/" + res + ".xls";
+                }
+            });
+        }
+    </script>
+    <script>
+        function demoHandler() {
+            let upload = document.getElementById("Luckyexcel-demo-file");
+            let selectADemo = document.getElementById("Luckyexcel-select-demo");
+            let downlodDemo = document.getElementById("Luckyexcel-downlod-file");
+            let mask = document.getElementById("lucky-mask-demo");
+            if (upload) {
+
+                window.onload = () => {
+
+                    upload.addEventListener("change",
+                        function (evt) {
+                            var files = evt.target.files;
+                            if (files == null || files.length == 0) {
+                                alert("No files wait for import");
+                                return;
+                            }
+
+                            let name = files[0].name;
+                            let suffixArr = name.split("."), suffix = suffixArr[suffixArr.length - 1];
+                            if (suffix != "xlsx") {
+                                alert("Currently only supports the import of xlsx files");
+                                return;
+                            }
+                            LuckyExcel.transformExcelToLucky(files[0],
+                                function (exportJson, luckysheetfile) {
+
+                                    if (exportJson.sheets == null || exportJson.sheets.length == 0) {
+                                        alert("Failed to read the content of the excel file, currently does not support xls files!");
+                                        return;
+                                    }
+                                    console.log(exportJson, luckysheetfile);
+                                    window.luckysheet.destroy();
+
+                                    window.luckysheet.create({
+                                        container: 'luckysheet', //luckysheet is the container id
+                                        showinfobar: false,
+                                        data: exportJson.sheets,
+                                        title: exportJson.info.name,
+                                        userInfo: exportJson.info.name.creator
+                                    });
+                                });
+                        });
+
+                    selectADemo.addEventListener("change",
+                        function (evt) {
+                            var obj = selectADemo;
+                            var index = obj.selectedIndex;
+                            var value = obj.options[index].value;
+                            var name = obj.options[index].innerHTML;
+                            if (value == "") {
+                                return;
+                            }
+                            mask.style.display = "flex";
+                            LuckyExcel.transformExcelToLuckyByUrl(value,
+                                name,
+                                function (exportJson, luckysheetfile) {
+
+                                    if (exportJson.sheets == null || exportJson.sheets.length == 0) {
+                                        alert("Failed to read the content of the excel file, currently does not support xls files!");
+                                        return;
+                                    }
+                                    console.log(exportJson, luckysheetfile);
+                                    mask.style.display = "none";
+                                    window.luckysheet.destroy();
+
+                                    window.luckysheet.create({
+                                        container: 'luckysheet', //luckysheet is the container id
+                                        showinfobar: false,
+                                        data: exportJson.sheets,
+                                        title: exportJson.info.name,
+                                        userInfo: exportJson.info.name.creator
+                                    });
+                                });
+                        });
+
+                    downlodDemo.addEventListener("click",
+                        function (evt) {
+                            var obj = selectADemo;
+                            var index = obj.selectedIndex;
+                            var value = obj.options[index].value;
+
+                            if (value.length == 0) {
+                                alert("Please select a demo file");
+                                return;
+                            }
+
+                            var elemIF = document.getElementById("Lucky-download-frame");
+                            if (elemIF == null) {
+                                elemIF = document.createElement("iframe");
+                                elemIF.style.display = "none";
+                                elemIF.id = "Lucky-download-frame";
+                                document.body.appendChild(elemIF);
+                            }
+                            elemIF.src = value;
+                        });
+                }
+            }
+        }
+        demoHandler();
     </script>
 }
