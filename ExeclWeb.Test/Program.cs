@@ -8,16 +8,9 @@ namespace ExeclWeb.Test
     {
         static async Task Main(string[] args)
         {
-            try
-            {
-                //JObjectTest.JObject();
-                await ProcessTest.Process();
-            }
-            catch (Exception e)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(e);
-            }
+            JObjectTest.JObject();
+            //await ProcessTest.Process();
+
             Console.WriteLine("end...");
             Console.ReadKey();
         }
