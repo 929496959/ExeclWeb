@@ -88,7 +88,7 @@ namespace ExeclWeb.Core.Application
                         {"name", itemJObject["name"]},
                         {"index", itemJObject["index"]},
                         {"order", itemJObject["order"]},
-                        {"status", itemJObject["status"]}
+                        {"status", itemJObject["status"]},
                     };
                     jArray.Add(newItem);
                 }
@@ -108,7 +108,9 @@ namespace ExeclWeb.Core.Application
             var jsonData = sheet.json_data.ToObject<JObject>();
             var jObject = new JObject
             {
-                {jsonData.Value<string>("index"), jsonData.Value<JArray>("celldata")}
+                {
+                    jsonData.Value<string>("index"), jsonData.Value<JArray>("celldata")!=null?jsonData.Value<JArray>("celldata"):new JArray()
+                }
             };
             return jObject;
         }

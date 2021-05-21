@@ -51,9 +51,11 @@
             luckysheet.exitEditMode();
             var sheets = luckysheet.getAllSheets();
             for (var i = 0; i < sheets.length; i++) {
-                sheets[i]["row"] = sheets[i].data.length;
-                sheets[i]["column"] = sheets[i].data[0].length;
-                sheets[i].data = [];
+                if ('data' in sheets[i]) {
+                    sheets[i]["row"] = sheets[i].data.length;
+                    sheets[i]["column"] = sheets[i].data[0].length;
+                    sheets[i].data = [];
+                }
             }
             $.ajax({
                 type: "post",
@@ -211,6 +213,7 @@
                 }
             }
         }
+
         demoHandler();
     </script>
 }
